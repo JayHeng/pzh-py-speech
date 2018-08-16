@@ -71,6 +71,8 @@ class wavCanvasPanel(wx.Panel):
                 wavAxes.plot(waveTime, waveData[i])
                 wavAxes.tick_params(labelcolor='w')
                 wavAxes.set_title('Audio Channel ' + str(i), color='w')
+            # Note!!!: draw() must be called if figure has been cleared once
+            self.wavCanvas.draw()
 
 class mainWin(tinypyspeech_win.speech_win):
 
@@ -87,7 +89,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"tinyPySPEECH v0.1.0")
+    main_win.SetTitle(u"tinyPySPEECH v0.1.1")
     main_win.Show()
 
     app.MainLoop()
