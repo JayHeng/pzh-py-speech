@@ -8,6 +8,7 @@ from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 import wave
+import pyaudio
 
 MAX_AUDIO_CHANNEL = 8
 #unit: inch
@@ -16,6 +17,13 @@ PLOT_PANEL_HEIGHT = 360
 #unit: percent
 PLOT_AXES_WIDTH_TITLE = 0.05
 PLOT_AXES_HEIGHT_LABEL = 0.075
+AUDIO_CHUNK_SIZE = 1024
+
+AUDIO_PLAY_STATE_START = 0
+AUDIO_PLAY_STATE_PLAY = 1
+AUDIO_PLAY_STATE_PAUSE = 2
+AUDIO_PLAY_STATE_RESUME = 3
+AUDIO_PLAY_STATE_END = 4
 
 class wavCanvasPanel(wx.Panel):
 
@@ -80,16 +88,62 @@ class mainWin(tinypyspeech_win.speech_win):
         tinypyspeech_win.speech_win.__init__(self, parent)
         self.wavPanel = wavCanvasPanel(self.m_panel_plot)
         self.m_genericDirCtrl_audioDir.SetFilter("Audio files (*.wav)|*.wav")
+        # Start -> Play -> Pause -> Resume -> End
+        self.playState = AUDIO_PLAY_STATE_START
 
     def viewAudio( self, event ):
         self.wavPath =  self.m_genericDirCtrl_audioDir.GetFilePath()
         self.wavPanel.showWave(self.wavPath)
+        if self.playState != AUDIO_PLAY_STATE_START:
+            self.playState = AUDIO_PLAY_STATE_END
+            self.m_button_play.SetLabel('Play Start')
+
+    def playAudioCallback(self, in_data, frame_count, time_info, status):
+        if self.playState == AUDIO_PLAY_STATE_PLAY or self.playState == AUDIO_PLAY_STATE_RESUME:
+            data = self.wavFile.readframes(frame_count)
+            if data == '':
+                status = pyaudio.paComplete
+                self.playState = AUDIO_PLAY_STATE_END
+                self.m_button_play.SetLabel('Play Start')
+            else:
+                status = pyaudio.paContinue
+            return (data, status)
+        else:
+            return ('', pyaudio.paContinue)
+
+    def playAudio( self, event ):
+        if os.path.isfile(self.wavPath):
+            if self.playState == AUDIO_PLAY_STATE_END:
+                self.playState = AUDIO_PLAY_STATE_START
+                self.wavStream.stop_stream()
+                self.wavStream.close()
+                self.wavPyaudio.terminate()
+                self.wavFile.close()
+            if self.playState == AUDIO_PLAY_STATE_START:
+                self.playState = AUDIO_PLAY_STATE_PLAY
+                self.m_button_play.SetLabel('Play Pause')
+                self.wavFile =  wave.open(self.wavPath, "rb")
+                self.wavPyaudio = pyaudio.PyAudio()
+                self.wavStream = self.wavPyaudio.open(format=self.wavPyaudio.get_format_from_width(self.wavFile.getsampwidth()),
+                                                      channels=self.wavFile.getnchannels(),
+                                                      rate=self.wavFile.getframerate(),
+                                                      output=True,
+                                                      stream_callback=self.playAudioCallback)
+                self.wavStream.start_stream()
+            elif self.playState == AUDIO_PLAY_STATE_PLAY or self.playState == AUDIO_PLAY_STATE_RESUME:
+                self.playState = AUDIO_PLAY_STATE_PAUSE
+                self.m_button_play.SetLabel('Play Resume')
+            elif self.playState == AUDIO_PLAY_STATE_PAUSE:
+                self.playState = AUDIO_PLAY_STATE_RESUME
+                self.m_button_play.SetLabel('Play Pause')
+            else:
+                pass
 
 if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"tinyPySPEECH v0.1.1")
+    main_win.SetTitle(u"tinyPySPEECH v0.2.0")
     main_win.Show()
 
     app.MainLoop()
