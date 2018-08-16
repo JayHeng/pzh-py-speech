@@ -101,7 +101,7 @@ class mainWin(tinypyspeech_win.speech_win):
     def playAudioCallback(self, in_data, frame_count, time_info, status):
         if self.playState == AUDIO_PLAY_STATE_PLAY or self.playState == AUDIO_PLAY_STATE_RESUME:
             data = self.wavFile.readframes(frame_count)
-            if data == '':
+            if self.wavFile.getnframes() == self.wavFile.tell():
                 status = pyaudio.paComplete
                 self.playState = AUDIO_PLAY_STATE_END
                 self.m_button_play.SetLabel('Play Start')
@@ -109,7 +109,9 @@ class mainWin(tinypyspeech_win.speech_win):
                 status = pyaudio.paContinue
             return (data, status)
         else:
-            return ('', pyaudio.paContinue)
+            # Note!!!:
+            data = numpy.zeros(frame_count*self.wavFile.getnchannels()).tostring()
+            return (data, pyaudio.paContinue)
 
     def playAudio( self, event ):
         if os.path.isfile(self.wavPath):
@@ -143,7 +145,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"tinyPySPEECH v0.2.0")
+    main_win.SetTitle(u"tinyPySPEECH v0.2.1")
     main_win.Show()
 
     app.MainLoop()
