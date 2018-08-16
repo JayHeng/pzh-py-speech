@@ -88,6 +88,7 @@ class mainWin(tinypyspeech_win.speech_win):
         tinypyspeech_win.speech_win.__init__(self, parent)
         self.wavPanel = wavCanvasPanel(self.m_panel_plot)
         self.m_genericDirCtrl_audioDir.SetFilter("Audio files (*.wav)|*.wav")
+        self.isRecording = False
         # Start -> Play -> Pause -> Resume -> End
         self.playState = AUDIO_PLAY_STATE_START
 
@@ -97,6 +98,62 @@ class mainWin(tinypyspeech_win.speech_win):
         if self.playState != AUDIO_PLAY_STATE_START:
             self.playState = AUDIO_PLAY_STATE_END
             self.m_button_play.SetLabel('Play Start')
+
+    def recordAudioCallback(self, in_data, frame_count, time_info, status):
+        if not self.isRecording:
+            status = pyaudio.paComplete
+        else:
+            self.wavFrames.append(in_data)
+            status = pyaudio.paContinue
+        return (in_data, status)
+
+    def recordAudio( self, event ):
+        if not self.isRecording:
+            self.isRecording = True
+            self.m_button_record.SetLabel('Record Stop')
+            # Get the wave parameter from user settings
+            fileName = self.m_textCtrl_fileName.GetLineText(0)
+            if fileName == '':
+                fileName = 'Untitled 1'
+            self.wavPath = os.path.join(os.path.dirname(os.path.abspath(os.path.dirname(__file__))), 'audio', 'record', fileName+'.wav')
+            self.wavSampRate = int(self.m_choice_sampRate.GetString(self.m_choice_sampRate.GetSelection()))
+            channels = self.m_choice_channels.GetString(self.m_choice_channels.GetSelection())
+            if channels == 'Mono':
+                self.wavChannels = 1
+            else: #if channels == 'Stereo':
+                self.wavChannels = 2
+            bitDepth = int(self.m_choice_bitDepth.GetString(self.m_choice_bitDepth.GetSelection()))
+            if bitDepth == 8:
+                self.wavBitFormat = pyaudio.paInt8
+            elif bitDepth == 24:
+                self.wavBitFormat = pyaudio.paInt24
+            elif bitDepth == 32:
+                self.wavBitFormat = pyaudio.paFloat32
+            else:
+                self.wavBitFormat = pyaudio.paInt16
+            # Record audio according to wave parameters
+            self.wavFrames = []
+            self.wavPyaudio = pyaudio.PyAudio()
+            self.wavStream = self.wavPyaudio.open(format=self.wavBitFormat,
+                                                  channels=self.wavChannels,
+                                                  rate=self.wavSampRate,
+                                                  input=True,
+                                                  frames_per_buffer=AUDIO_CHUNK_SIZE,
+                                                  stream_callback=self.recordAudioCallback)
+            self.wavStream.start_stream()
+        else:
+            self.isRecording = False
+            self.m_button_record.SetLabel('Record Start')
+            self.wavStream.stop_stream()
+            self.wavStream.close()
+            self.wavPyaudio.terminate()
+            # Save the wave data into file
+            wavFile = wave.open(self.wavPath, 'wb')
+            wavFile.setnchannels(self.wavChannels)
+            wavFile.setsampwidth(self.wavPyaudio.get_sample_size(self.wavBitFormat))
+            wavFile.setframerate(self.wavSampRate)
+            wavFile.writeframes(b''.join(self.wavFrames))
+            wavFile.close()
 
     def playAudioCallback(self, in_data, frame_count, time_info, status):
         if self.playState == AUDIO_PLAY_STATE_PLAY or self.playState == AUDIO_PLAY_STATE_RESUME:
@@ -145,7 +202,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"tinyPySPEECH v0.2.1")
+    main_win.SetTitle(u"tinyPySPEECH v0.3.0")
     main_win.Show()
 
     app.MainLoop()
