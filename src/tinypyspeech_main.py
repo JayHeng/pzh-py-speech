@@ -50,8 +50,9 @@ class wavCanvasPanel(wx.Panel):
             wavFile.close()
             # Transpose the wav data if wave has multiple channels
             retData = numpy.fromstring(wavData, dtype = numpy.short)
-            retData.shape = -1, 2
-            retData = retData.T
+            if wavChannels != 1:
+                retData.shape = -1, wavChannels
+                retData = retData.T
             # Calculate and arange wave time
             retTime = numpy.arange(0, wavFrames) * (1.0 / wavFramerate)
             retChannels = wavChannels
@@ -76,7 +77,10 @@ class wavCanvasPanel(wx.Panel):
                 wavAxes.set_prop_cycle(color='#00F279', lw=[1])
                 wavAxes.set_xlabel('time (s)', color='w')
                 wavAxes.set_ylabel('value', color='w')
-                wavAxes.plot(waveTime, waveData[i])
+                if waveChannels == 1:
+                    wavAxes.plot(waveTime, waveData)
+                else:
+                    wavAxes.plot(waveTime, waveData[i])
                 wavAxes.tick_params(labelcolor='w')
                 wavAxes.set_title('Audio Channel ' + str(i), color='w')
             # Note!!!: draw() must be called if figure has been cleared once
@@ -202,7 +206,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"tinyPySPEECH v0.3.0")
+    main_win.SetTitle(u"tinyPySPEECH v0.3.1")
     main_win.Show()
 
     app.MainLoop()
