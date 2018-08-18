@@ -25,6 +25,33 @@ AUDIO_PLAY_STATE_PAUSE = 2
 AUDIO_PLAY_STATE_RESUME = 3
 AUDIO_PLAY_STATE_END = 4
 
+class wavCursor(object):
+    def __init__(self, ax, x, y):
+        self.ax = ax
+        self.vline = ax.axvline(color='r', alpha=1)
+        self.hline = ax.axhline(color='r', alpha=1)
+        self.marker, = ax.plot([0],[0], marker="o", color="crimson", zorder=3)
+        self.x = x
+        self.y = y
+        self.xlim = self.x[len(self.x)-1]
+        self.text = ax.text(0.7, 0.9, '', bbox=dict(facecolor='red', alpha=0.5))
+
+    def moveMouse(self, event):
+        if not event.inaxes:
+            return
+        x, y = event.xdata, event.ydata
+        if x > self.xlim:
+            x = self.xlim
+        index = numpy.searchsorted(self.x, [x])[0]
+        x = self.x[index]
+        y = self.y[index]
+        self.vline.set_xdata(x)
+        self.hline.set_ydata(y)
+        self.marker.set_data([x],[y])
+        self.text.set_text('x=%1.2f, y=%1.2f' % (x, y))
+        self.text.set_position((x,y))
+        self.ax.figure.canvas.draw_idle()
+
 class wavCanvasPanel(wx.Panel):
 
     def __init__(self, parent):
@@ -37,6 +64,8 @@ class wavCanvasPanel(wx.Panel):
         self.wavSizer = wx.BoxSizer(wx.VERTICAL)
         self.wavSizer.Add(self.wavCanvas, 1, wx.EXPAND|wx.ALL)
         self.SetSizerAndFit(self.wavSizer)
+        self.wavAxes = [None] * MAX_AUDIO_CHANNEL
+        self.wavCursor = [None] * MAX_AUDIO_CHANNEL
 
     def readWave(self, wavPath):
         if os.path.isfile(wavPath):
@@ -73,16 +102,20 @@ class wavCanvasPanel(wx.Panel):
                 bottom = (1.0 / waveChannels) * (waveChannels - 1 - i) + PLOT_AXES_HEIGHT_LABEL
                 height = 1.0 / waveChannels - (PLOT_AXES_WIDTH_TITLE + PLOT_AXES_HEIGHT_LABEL)
                 width = 1 - left - 0.05
-                wavAxes = self.wavFigure.add_axes([left, bottom, width, height], facecolor='k')
-                wavAxes.set_prop_cycle(color='#00F279', lw=[1])
-                wavAxes.set_xlabel('time (s)', color='w')
-                wavAxes.set_ylabel('value', color='w')
+                self.wavAxes[i] = self.wavFigure.add_axes([left, bottom, width, height], facecolor='k')
+                self.wavAxes[i].set_prop_cycle(color='#00F279', lw=[1])
+                self.wavAxes[i].set_xlabel('time (s)', color='w')
+                self.wavAxes[i].set_ylabel('value', color='w')
                 if waveChannels == 1:
-                    wavAxes.plot(waveTime, waveData)
+                    data = waveData
                 else:
-                    wavAxes.plot(waveTime, waveData[i])
-                wavAxes.tick_params(labelcolor='w')
-                wavAxes.set_title('Audio Channel ' + str(i), color='w')
+                    data = waveData[i]
+                self.wavAxes[i].plot(waveTime, data)
+                self.wavAxes[i].grid()
+                self.wavAxes[i].tick_params(labelcolor='w')
+                self.wavAxes[i].set_title('Audio Channel ' + str(i), color='w')
+                self.wavCursor[i] = wavCursor(self.wavAxes[i], waveTime, data)
+                self.wavCanvas.mpl_connect('motion_notify_event', self.wavCursor[i].moveMouse)
             # Note!!!: draw() must be called if figure has been cleared once
             self.wavCanvas.draw()
 
