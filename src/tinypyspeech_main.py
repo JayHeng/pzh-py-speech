@@ -73,17 +73,26 @@ class wavCanvasPanel(wx.Panel):
             wavFile =  wave.open(wavPath, "rb")
             wavParams = wavFile.getparams()
             wavChannels = wavParams[0]
+            wavSampwidth = wavParams[1]
             wavFramerate = wavParams[2]
             wavFrames = wavParams[3]
             wavInfo.Clear()
             wavInfo.write('Channels:' + str(wavChannels))
-            wavInfo.write(', SampWidth:' + str(wavParams[1]) + 'Byte')
-            wavInfo.write(', SampRate:' + str(wavParams[2]) + 'kHz')
+            wavInfo.write(', SampWidth:' + str(wavSampwidth) + 'Byte')
+            wavInfo.write(', SampRate:' + str(wavFramerate) + 'kHz')
             wavInfo.write(', FormatTag:' + wavParams[4])
             wavData = wavFile.readframes(wavFrames)
             wavFile.close()
             # Transpose the wav data if wave has multiple channels
-            retData = numpy.fromstring(wavData, dtype = numpy.short)
+            if wavSampwidth == 1:
+                dtype = numpy.int8
+            elif wavSampwidth == 2:
+                dtype = numpy.int16
+            elif wavSampwidth == 4:
+                dtype = numpy.float32
+            else:
+                 return 0, 0, 0
+            retData = numpy.fromstring(wavData, dtype = dtype)
             if wavChannels != 1:
                 retData.shape = -1, wavChannels
                 retData = retData.T
@@ -244,7 +253,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"tinyPySPEECH v0.5.0")
+    main_win.SetTitle(u"tinyPySPEECH v0.5.1")
     main_win.Show()
 
     app.MainLoop()
