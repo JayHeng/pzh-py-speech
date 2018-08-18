@@ -147,7 +147,7 @@ class speech_win ( wx.Frame ):
 
 		ctrl_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
 
-		self.m_staticText_null1 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 130,-1 ), 0 )
+		self.m_staticText_null1 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 30,-1 ), 0 )
 		self.m_staticText_null1.Wrap( -1 )
 
 		ctrl_win.Add( self.m_staticText_null1, 0, wx.ALL, 5 )
@@ -155,25 +155,15 @@ class speech_win ( wx.Frame ):
 		self.m_button_play = wx.Button( self, wx.ID_ANY, u"Play Start", wx.DefaultPosition, wx.Size( 110,-1 ), 0 )
 		ctrl_win.Add( self.m_button_play, 0, wx.ALL, 5 )
 
-		self.m_staticText_volume = wx.StaticText( self, wx.ID_ANY, u"Volume:", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText_volume.Wrap( -1 )
+		self.m_staticText_audioInfo = wx.StaticText( self, wx.ID_ANY, u"Opened Audio Info:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText_audioInfo.Wrap( -1 )
 
-		self.m_staticText_volume.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+		self.m_staticText_audioInfo.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
 
-		ctrl_win.Add( self.m_staticText_volume, 0, wx.ALL, 5 )
+		ctrl_win.Add( self.m_staticText_audioInfo, 0, wx.ALL, 5 )
 
-		self.m_slider_volume = wx.Slider( self, wx.ID_ANY, 50, 0, 100, wx.DefaultPosition, wx.DefaultSize, wx.SL_HORIZONTAL )
-		ctrl_win.Add( self.m_slider_volume, 0, wx.ALL, 5 )
-
-		self.m_staticText_velocity = wx.StaticText( self, wx.ID_ANY, u"Velocity:", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText_velocity.Wrap( -1 )
-
-		self.m_staticText_velocity.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
-
-		ctrl_win.Add( self.m_staticText_velocity, 0, wx.ALL, 5 )
-
-		self.m_slider_velocity = wx.Slider( self, wx.ID_ANY, 50, 0, 100, wx.DefaultPosition, wx.DefaultSize, wx.SL_HORIZONTAL )
-		ctrl_win.Add( self.m_slider_velocity, 0, wx.ALL, 5 )
+		self.m_textCtrl_audioInfo = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 400,-1 ), 0 )
+		ctrl_win.Add( self.m_textCtrl_audioInfo, 0, wx.ALL, 5 )
 
 
 		hmi_win.Add( ctrl_win, 1, wx.EXPAND, 5 )

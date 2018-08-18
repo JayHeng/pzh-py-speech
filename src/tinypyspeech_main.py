@@ -67,7 +67,7 @@ class wavCanvasPanel(wx.Panel):
         self.wavAxes = [None] * MAX_AUDIO_CHANNEL
         self.wavCursor = [None] * MAX_AUDIO_CHANNEL
 
-    def readWave(self, wavPath):
+    def readWave(self, wavPath, wavInfo):
         if os.path.isfile(wavPath):
             # Open the wav file to get wave data and parameters
             wavFile =  wave.open(wavPath, "rb")
@@ -75,6 +75,11 @@ class wavCanvasPanel(wx.Panel):
             wavChannels = wavParams[0]
             wavFramerate = wavParams[2]
             wavFrames = wavParams[3]
+            wavInfo.Clear()
+            wavInfo.write('Channels:' + str(wavChannels))
+            wavInfo.write(', SampWidth:' + str(wavParams[1]) + 'Byte')
+            wavInfo.write(', SampRate:' + str(wavParams[2]) + 'kHz')
+            wavInfo.write(', FormatTag:' + wavParams[4])
             wavData = wavFile.readframes(wavFrames)
             wavFile.close()
             # Transpose the wav data if wave has multiple channels
@@ -89,9 +94,9 @@ class wavCanvasPanel(wx.Panel):
         else:
             return 0, 0, 0
 
-    def showWave(self, wavPath):
+    def showWave(self, wavPath, wavInfo):
         self.wavFigure.clear()
-        waveChannels, waveData, waveTime = self.readWave(wavPath)
+        waveChannels, waveData, waveTime = self.readWave(wavPath, wavInfo)
         if waveChannels != 0:
             # Note: only show max supported channel if actual channel > max supported channel
             if waveChannels > MAX_AUDIO_CHANNEL:
@@ -131,7 +136,7 @@ class mainWin(tinypyspeech_win.speech_win):
 
     def viewAudio( self, event ):
         self.wavPath =  self.m_genericDirCtrl_audioDir.GetFilePath()
-        self.wavPanel.showWave(self.wavPath)
+        self.wavPanel.showWave(self.wavPath, self.m_textCtrl_audioInfo)
         if self.playState != AUDIO_PLAY_STATE_START:
             self.playState = AUDIO_PLAY_STATE_END
             self.m_button_play.SetLabel('Play Start')
@@ -239,7 +244,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"tinyPySPEECH v0.3.1")
+    main_win.SetTitle(u"tinyPySPEECH v0.5.0")
     main_win.Show()
 
     app.MainLoop()
