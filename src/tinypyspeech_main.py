@@ -163,10 +163,10 @@ class mainWin(tinypyspeech_win.speech_win):
             self.isRecording = True
             self.m_button_record.SetLabel('Record Stop')
             # Get the wave parameter from user settings
-            fileName = self.m_textCtrl_fileName.GetLineText(0)
+            fileName = self.m_textCtrl_recFileName.GetLineText(0)
             if fileName == '':
-                fileName = 'Untitled 1'
-            self.wavPath = os.path.join(os.path.dirname(os.path.abspath(os.path.dirname(__file__))), 'audio', 'record', fileName+'.wav')
+                fileName = 'rec_untitled1.wav'
+            self.wavPath = os.path.join(os.path.dirname(os.path.abspath(os.path.dirname(__file__))), 'audio', 'record', fileName)
             self.wavSampRate = int(self.m_choice_sampRate.GetString(self.m_choice_sampRate.GetSelection()))
             channels = self.m_choice_channels.GetString(self.m_choice_channels.GetSelection())
             if channels == 'Mono':
@@ -249,11 +249,17 @@ class mainWin(tinypyspeech_win.speech_win):
             else:
                 pass
 
+    def audioSpeechRecognition( self, event ):
+        event.Skip()
+
+    def textToSpeech( self, event ):
+        event.Skip()
+
 if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"tinyPySPEECH v0.5.1")
+    main_win.SetTitle(u"tinyPySPEECH v0.6.0")
     main_win.Show()
 
     app.MainLoop()
