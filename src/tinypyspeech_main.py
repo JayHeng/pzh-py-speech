@@ -76,11 +76,11 @@ class wavCanvasPanel(wx.Panel):
             wavSampwidth = wavParams[1]
             wavFramerate = wavParams[2]
             wavFrames = wavParams[3]
-            wavInfo.Clear()
-            wavInfo.write('Channels:' + str(wavChannels))
-            wavInfo.write(', SampWidth:' + str(wavSampwidth) + 'Byte')
-            wavInfo.write(', SampRate:' + str(wavFramerate) + 'kHz')
-            wavInfo.write(', FormatTag:' + wavParams[4])
+            wavInfo.SetStatusText('Opened Audio Info = ' +
+                                  'Channels:' + str(wavChannels) +
+                                  ', SampWidth:' + str(wavSampwidth) + 'Byte' +
+                                  ', SampRate:' + str(wavFramerate) + 'kHz' +
+                                  ', FormatTag:' + wavParams[4])
             wavData = wavFile.readframes(wavFrames)
             wavFile.close()
             # Transpose the wav data if wave has multiple channels
@@ -142,10 +142,11 @@ class mainWin(tinypyspeech_win.speech_win):
         self.isRecording = False
         # Start -> Play -> Pause -> Resume -> End
         self.playState = AUDIO_PLAY_STATE_START
+        self.statusBar.SetFieldsCount(1)
 
     def viewAudio( self, event ):
         self.wavPath =  self.m_genericDirCtrl_audioDir.GetFilePath()
-        self.wavPanel.showWave(self.wavPath, self.m_textCtrl_audioInfo)
+        self.wavPanel.showWave(self.wavPath, self.statusBar)
         if self.playState != AUDIO_PLAY_STATE_START:
             self.playState = AUDIO_PLAY_STATE_END
             self.m_button_play.SetLabel('Play Start')
@@ -255,11 +256,21 @@ class mainWin(tinypyspeech_win.speech_win):
     def textToSpeech( self, event ):
         event.Skip()
 
+    def showHomepageInfo( self, event ):
+        messageText = (('Code: \n    https://github.com/JayHeng/tinyPySPEECH.git \n') +
+                       ('Doc: \n    https://www.cnblogs.com/henjay724/p/9541867.html \n'))
+        wx.MessageBox(messageText, "Homepage", wx.OK | wx.ICON_INFORMATION)
+
+    def showAboutInfo( self, event ):
+        messageText = (('Author: Jay Heng \n') +
+                       ('Email: hengjie1989@foxmail.com \n'))
+        wx.MessageBox(messageText, "About", wx.OK | wx.ICON_INFORMATION)
+
 if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"tinyPySPEECH v0.6.0")
+    main_win.SetTitle(u"tinyPySPEECH v0.7.0")
     main_win.Show()
 
     app.MainLoop()

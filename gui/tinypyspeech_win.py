@@ -17,25 +17,37 @@ import wx.xrc
 class speech_win ( wx.Frame ):
 
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 940,600 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 940,634 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 64, 64, 64 ) )
+
+		self.menubar = wx.MenuBar( 0 )
+		self.m_menu_help = wx.Menu()
+		self.m_menuItem_homePage = wx.MenuItem( self.m_menu_help, wx.ID_ANY, u"Home Page", wx.EmptyString, wx.ITEM_NORMAL )
+		self.m_menu_help.Append( self.m_menuItem_homePage )
+
+		self.m_menuItem_about = wx.MenuItem( self.m_menu_help, wx.ID_ANY, u"About Author", wx.EmptyString, wx.ITEM_NORMAL )
+		self.m_menu_help.Append( self.m_menuItem_about )
+
+		self.menubar.Append( self.m_menu_help, u"Help" )
+
+		self.SetMenuBar( self.menubar )
 
 		win_sizer = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
 
 		edit_win = wx.BoxSizer( wx.VERTICAL )
 
-		dir_win = wx.BoxSizer( wx.VERTICAL )
+		dir_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
 
-		self.m_staticText_selectAudioFile = wx.StaticText( self, wx.ID_ANY, u"Select Audio File:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText_selectAudioFile = wx.StaticText( self, wx.ID_ANY, u"Select Audio File to Play and Show:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText_selectAudioFile.Wrap( -1 )
 
 		self.m_staticText_selectAudioFile.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
 
 		dir_win.Add( self.m_staticText_selectAudioFile, 0, wx.ALL, 5 )
 
-		self.m_genericDirCtrl_audioDir = wx.GenericDirCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 180,100 ), wx.DIRCTRL_SHOW_FILTERS|wx.HSCROLL, wx.EmptyString, 0 )
+		self.m_genericDirCtrl_audioDir = wx.GenericDirCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 180,250 ), wx.DIRCTRL_SHOW_FILTERS|wx.HSCROLL, wx.EmptyString, 0 )
 
 		self.m_genericDirCtrl_audioDir.ShowHidden( False )
 		self.m_genericDirCtrl_audioDir.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
@@ -43,15 +55,23 @@ class speech_win ( wx.Frame ):
 
 		dir_win.Add( self.m_genericDirCtrl_audioDir, 1, wx.EXPAND |wx.ALL, 5 )
 
+		self.m_staticText_null0 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 30,-1 ), 0 )
+		self.m_staticText_null0.Wrap( -1 )
+
+		dir_win.Add( self.m_staticText_null0, 0, wx.ALL, 5 )
+
+		self.m_button_play = wx.Button( self, wx.ID_ANY, u"Play Start", wx.DefaultPosition, wx.Size( 110,-1 ), 0 )
+		dir_win.Add( self.m_button_play, 0, wx.ALL, 5 )
+
 
 		edit_win.Add( dir_win, 1, wx.EXPAND, 5 )
 
 		rec_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
 
-		self.m_staticText_null0 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( -1,30 ), 0 )
-		self.m_staticText_null0.Wrap( -1 )
+		self.m_staticText_null2 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText_null2.Wrap( -1 )
 
-		rec_win.Add( self.m_staticText_null0, 0, wx.ALL, 5 )
+		rec_win.Add( self.m_staticText_null2, 0, wx.ALL, 5 )
 
 		self.m_staticText_recordAudioFile = wx.StaticText( self, wx.ID_ANY, u"Record Audio File:", wx.DefaultPosition, wx.Size( 180,-1 ), 0 )
 		self.m_staticText_recordAudioFile.Wrap( -1 )
@@ -148,36 +168,11 @@ class speech_win ( wx.Frame ):
 
 		show_win.Add( plot_win, 1, wx.EXPAND, 5 )
 
-		hmi_win = wx.BoxSizer( wx.VERTICAL )
-
-		play_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
-
-		self.m_staticText_null2 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 30,-1 ), 0 )
-		self.m_staticText_null2.Wrap( -1 )
-
-		play_win.Add( self.m_staticText_null2, 0, wx.ALL, 5 )
-
-		self.m_button_play = wx.Button( self, wx.ID_ANY, u"Play Start", wx.DefaultPosition, wx.Size( 110,-1 ), 0 )
-		play_win.Add( self.m_button_play, 0, wx.ALL, 5 )
-
-		self.m_staticText_audioInfo = wx.StaticText( self, wx.ID_ANY, u"Opened Audio Info:", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText_audioInfo.Wrap( -1 )
-
-		self.m_staticText_audioInfo.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
-
-		play_win.Add( self.m_staticText_audioInfo, 0, wx.ALL, 5 )
-
-		self.m_textCtrl_audioInfo = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 400,-1 ), 0 )
-		play_win.Add( self.m_textCtrl_audioInfo, 0, wx.ALL, 5 )
-
-
-		hmi_win.Add( play_win, 1, wx.EXPAND, 5 )
-
 		conv_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
 
 		text_win = wx.BoxSizer( wx.VERTICAL )
 
-		self.m_textCtrl_asrttsText = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 480,150 ), wx.TE_MULTILINE )
+		self.m_textCtrl_asrttsText = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 480,170 ), wx.TE_MULTILINE )
 		text_win.Add( self.m_textCtrl_asrttsText, 0, wx.ALL, 5 )
 
 
@@ -185,7 +180,7 @@ class speech_win ( wx.Frame ):
 
 		asrtts_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
 
-		self.m_staticText_null3 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText_null3 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 220,-1 ), 0 )
 		self.m_staticText_null3.Wrap( -1 )
 
 		asrtts_win.Add( self.m_staticText_null3, 0, wx.ALL, 5 )
@@ -196,6 +191,18 @@ class speech_win ( wx.Frame ):
 		self.m_staticText_conv.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
 
 		asrtts_win.Add( self.m_staticText_conv, 0, wx.ALL, 5 )
+
+		self.m_staticText_engine = wx.StaticText( self, wx.ID_ANY, u"Engine:", wx.DefaultPosition, wx.Size( 40,-1 ), 0 )
+		self.m_staticText_engine.Wrap( -1 )
+
+		self.m_staticText_engine.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+
+		asrtts_win.Add( self.m_staticText_engine, 0, wx.ALL, 5 )
+
+		m_choice_engineChoices = [ u"CMU Sphinx", u"Google Speech Recognition", u"Google Cloud Speech API", u"Wit.ai", u"Microsoft Bing Voice Recognition", u"Houndify API", u"IBM Speech to Text", u"Snowboy Hotword Detection" ]
+		self.m_choice_engine = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 180,-1 ), m_choice_engineChoices, 0 )
+		self.m_choice_engine.SetSelection( 0 )
+		asrtts_win.Add( self.m_choice_engine, 0, wx.ALL, 5 )
 
 		self.m_button_asr = wx.Button( self, wx.ID_ANY, u"ASR", wx.DefaultPosition, wx.Size( 40,-1 ), 0 )
 		asrtts_win.Add( self.m_button_asr, 0, wx.ALL, 5 )
@@ -213,10 +220,7 @@ class speech_win ( wx.Frame ):
 		conv_win.Add( asrtts_win, 1, wx.EXPAND, 5 )
 
 
-		hmi_win.Add( conv_win, 1, wx.EXPAND, 5 )
-
-
-		show_win.Add( hmi_win, 1, wx.EXPAND, 5 )
+		show_win.Add( conv_win, 1, wx.EXPAND, 5 )
 
 
 		win_sizer.Add( show_win, 1, wx.EXPAND, 5 )
@@ -224,13 +228,16 @@ class speech_win ( wx.Frame ):
 
 		self.SetSizer( win_sizer )
 		self.Layout()
+		self.statusBar = self.CreateStatusBar( 1, wx.STB_SIZEGRIP, wx.ID_ANY )
 
 		self.Centre( wx.BOTH )
 
 		# Connect Events
+		self.Bind( wx.EVT_MENU, self.showHomepageInfo, id = self.m_menuItem_homePage.GetId() )
+		self.Bind( wx.EVT_MENU, self.showAboutInfo, id = self.m_menuItem_about.GetId() )
 		self.m_genericDirCtrl_audioDir.Bind( wx.EVT_TREE_SEL_CHANGED, self.viewAudio )
-		self.m_button_record.Bind( wx.EVT_BUTTON, self.recordAudio )
 		self.m_button_play.Bind( wx.EVT_BUTTON, self.playAudio )
+		self.m_button_record.Bind( wx.EVT_BUTTON, self.recordAudio )
 		self.m_button_asr.Bind( wx.EVT_BUTTON, self.audioSpeechRecognition )
 		self.m_button_tts.Bind( wx.EVT_BUTTON, self.textToSpeech )
 
@@ -239,13 +246,19 @@ class speech_win ( wx.Frame ):
 
 
 	# Virtual event handlers, overide them in your derived class
+	def showHomepageInfo( self, event ):
+		event.Skip()
+
+	def showAboutInfo( self, event ):
+		event.Skip()
+
 	def viewAudio( self, event ):
 		event.Skip()
 
-	def recordAudio( self, event ):
+	def playAudio( self, event ):
 		event.Skip()
 
-	def playAudio( self, event ):
+	def recordAudio( self, event ):
 		event.Skip()
 
 	def audioSpeechRecognition( self, event ):
