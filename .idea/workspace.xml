@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef2ad98f-3a78-4e39-8461-d6cf357b4bbc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui/tinyPySPEECH.fbp" beforeDir="false" afterPath="$PROJECT_DIR$/gui/tinyPySPEECH.fbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui/tinypyspeech_win.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/tinypyspeech_win.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tinypyspeech_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tinypyspeech_main.py" afterDir="false" />
@@ -42,8 +41,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tinypyspeech_main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="143" column="47" lean-forward="true" selection-start-line="143" selection-start-column="47" selection-end-line="143" selection-end-column="47" />
+            <state relative-caret-position="96">
+              <caret line="144" column="47" selection-start-line="144" selection-start-column="47" selection-end-line="144" selection-end-column="47" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -56,7 +55,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="427" />
     <option name="y" value="199" />
     <option name="width" value="1030" />
@@ -140,7 +139,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="427" y="199" width="1030" height="805" extended-state="1" />
+    <frame x="427" y="199" width="1030" height="805" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
@@ -168,8 +167,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/tinypyspeech_main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="143" column="47" lean-forward="true" selection-start-line="143" selection-start-column="47" selection-end-line="143" selection-end-column="47" />
+        <state relative-caret-position="96">
+          <caret line="144" column="47" selection-start-line="144" selection-start-column="47" selection-end-line="144" selection-end-column="47" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

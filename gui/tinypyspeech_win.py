@@ -168,11 +168,52 @@ class speech_win ( wx.Frame ):
 
 		show_win.Add( plot_win, 1, wx.EXPAND, 5 )
 
+		ctrl_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
+
+		self.m_staticText_conv = wx.StaticText( self, wx.ID_ANY, u"Audio/Text  Conversation Configuration and Display:", wx.DefaultPosition, wx.Size( 720,-1 ), 0 )
+		self.m_staticText_conv.Wrap( -1 )
+
+		self.m_staticText_conv.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+
+		ctrl_win.Add( self.m_staticText_conv, 0, wx.ALL, 5 )
+
+		self.m_staticText_null3 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 17,-1 ), 0 )
+		self.m_staticText_null3.Wrap( -1 )
+
+		ctrl_win.Add( self.m_staticText_null3, 0, wx.ALL, 5 )
+
+		self.m_staticText_engine = wx.StaticText( self, wx.ID_ANY, u"Engine:", wx.DefaultPosition, wx.Size( 40,-1 ), 0 )
+		self.m_staticText_engine.Wrap( -1 )
+
+		self.m_staticText_engine.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+
+		ctrl_win.Add( self.m_staticText_engine, 0, wx.ALL, 5 )
+
+		m_choice_engineChoices = [ u"CMU Sphinx", u"Google Speech Recognition", u"Google Cloud Speech API", u"Wit.ai", u"Microsoft Bing Voice Recognition", u"Houndify API", u"IBM Speech to Text", u"Snowboy Hotword Detection" ]
+		self.m_choice_engine = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 180,-1 ), m_choice_engineChoices, 0 )
+		self.m_choice_engine.SetSelection( 0 )
+		ctrl_win.Add( self.m_choice_engine, 0, wx.ALL, 5 )
+
+		self.m_staticText_lang = wx.StaticText( self, wx.ID_ANY, u"Language:", wx.Point( -1,-1 ), wx.Size( -1,-1 ), 0 )
+		self.m_staticText_lang.Wrap( -1 )
+
+		self.m_staticText_lang.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+
+		ctrl_win.Add( self.m_staticText_lang, 0, wx.ALL, 5 )
+
+		m_choice_langChoices = [ u"US English", u"Mandarin Chinese" ]
+		self.m_choice_lang = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, m_choice_langChoices, 0 )
+		self.m_choice_lang.SetSelection( 0 )
+		ctrl_win.Add( self.m_choice_lang, 0, wx.ALL, 5 )
+
+
+		show_win.Add( ctrl_win, 1, wx.EXPAND, 5 )
+
 		conv_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
 
-		text_win = wx.BoxSizer( wx.VERTICAL )
+		text_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
 
-		self.m_textCtrl_asrttsText = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 480,170 ), wx.TE_MULTILINE )
+		self.m_textCtrl_asrttsText = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 480,120 ), wx.TE_MULTILINE )
 		text_win.Add( self.m_textCtrl_asrttsText, 0, wx.ALL, 5 )
 
 
@@ -180,29 +221,12 @@ class speech_win ( wx.Frame ):
 
 		asrtts_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
 
-		self.m_staticText_null3 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 220,-1 ), 0 )
-		self.m_staticText_null3.Wrap( -1 )
+		self.m_staticText_null4 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 230,-1 ), 0 )
+		self.m_staticText_null4.Wrap( -1 )
 
-		asrtts_win.Add( self.m_staticText_null3, 0, wx.ALL, 5 )
+		self.m_staticText_null4.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
 
-		self.m_staticText_conv = wx.StaticText( self, wx.ID_ANY, u"Audio/Text Conversation:", wx.DefaultPosition, wx.Size( 230,-1 ), 0 )
-		self.m_staticText_conv.Wrap( -1 )
-
-		self.m_staticText_conv.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
-
-		asrtts_win.Add( self.m_staticText_conv, 0, wx.ALL, 5 )
-
-		self.m_staticText_engine = wx.StaticText( self, wx.ID_ANY, u"Engine:", wx.DefaultPosition, wx.Size( 40,-1 ), 0 )
-		self.m_staticText_engine.Wrap( -1 )
-
-		self.m_staticText_engine.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
-
-		asrtts_win.Add( self.m_staticText_engine, 0, wx.ALL, 5 )
-
-		m_choice_engineChoices = [ u"CMU Sphinx", u"Google Speech Recognition", u"Google Cloud Speech API", u"Wit.ai", u"Microsoft Bing Voice Recognition", u"Houndify API", u"IBM Speech to Text", u"Snowboy Hotword Detection" ]
-		self.m_choice_engine = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 180,-1 ), m_choice_engineChoices, 0 )
-		self.m_choice_engine.SetSelection( 0 )
-		asrtts_win.Add( self.m_choice_engine, 0, wx.ALL, 5 )
+		asrtts_win.Add( self.m_staticText_null4, 0, wx.ALL, 5 )
 
 		self.m_button_asr = wx.Button( self, wx.ID_ANY, u"ASR", wx.DefaultPosition, wx.Size( 40,-1 ), 0 )
 		asrtts_win.Add( self.m_button_asr, 0, wx.ALL, 5 )

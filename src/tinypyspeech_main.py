@@ -9,6 +9,7 @@ from matplotlib.figure import Figure
 
 import wave
 import pyaudio
+import speech_recognition
 
 MAX_AUDIO_CHANNEL = 8
 #unit: inch
@@ -251,7 +252,32 @@ class mainWin(tinypyspeech_win.speech_win):
                 pass
 
     def audioSpeechRecognition( self, event ):
-        event.Skip()
+        if os.path.isfile(self.wavPath):
+            speechObj = speech_recognition.Recognizer()
+            with speech_recognition.AudioFile(self.wavPath) as source:
+                # Read the entire audio file
+                speechAudio = speechObj.record(source)
+            self.m_textCtrl_asrttsText.Clear()
+            # Get language type
+            languageType = self.m_choice_lang.GetString(self.m_choice_lang.GetSelection())
+            if languageType == 'Mandarin Chinese':
+                languageType = 'zh-CN'
+            else: # languageType == 'US English':
+                languageType = 'en-US'
+
+            engineType = self.m_choice_engine.GetString(self.m_choice_engine.GetSelection())
+            if engineType == 'CMU Sphinx':
+                # Recognize speech using Sphinx
+                try:
+                    speechText = speechObj.recognize_sphinx(speechAudio, language=languageType)
+                    self.m_textCtrl_asrttsText.write(speechText)
+                    self.statusBar.SetStatusText("ASR Conversation Info: Successfully")
+                except speech_recognition.UnknownValueError:
+                    self.statusBar.SetStatusText("ASR Conversation Info: Sphinx could not understand audio")
+                except speech_recognition.RequestError as e:
+                    self.statusBar.SetStatusText("ASR Conversation Info: Sphinx error; {0}".format(e))
+            else:
+                self.statusBar.SetStatusText("ASR Conversation Info: Unavailable Engine")
 
     def textToSpeech( self, event ):
         event.Skip()
@@ -270,7 +296,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"tinyPySPEECH v0.7.0")
+    main_win.SetTitle(u"tinyPySPEECH v0.8.0")
     main_win.Show()
 
     app.MainLoop()
