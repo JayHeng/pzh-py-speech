@@ -68,10 +68,10 @@ class speech_win ( wx.Frame ):
 
 		rec_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
 
-		self.m_staticText_null2 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText_null2.Wrap( -1 )
+		self.m_staticText_null1 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText_null1.Wrap( -1 )
 
-		rec_win.Add( self.m_staticText_null2, 0, wx.ALL, 5 )
+		rec_win.Add( self.m_staticText_null1, 0, wx.ALL, 5 )
 
 		self.m_staticText_recordAudioFile = wx.StaticText( self, wx.ID_ANY, u"Record Audio File:", wx.DefaultPosition, wx.Size( 180,-1 ), 0 )
 		self.m_staticText_recordAudioFile.Wrap( -1 )
@@ -80,15 +80,17 @@ class speech_win ( wx.Frame ):
 
 		rec_win.Add( self.m_staticText_recordAudioFile, 0, wx.ALL, 5 )
 
-		self.m_staticText_fileName = wx.StaticText( self, wx.ID_ANY, u"File Name:", wx.DefaultPosition, wx.Size( 60,-1 ), 0 )
-		self.m_staticText_fileName.Wrap( -1 )
+		self.m_staticText_channels = wx.StaticText( self, wx.ID_ANY, u"Channels:", wx.DefaultPosition, wx.Size( 60,-1 ), 0 )
+		self.m_staticText_channels.Wrap( -1 )
 
-		self.m_staticText_fileName.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+		self.m_staticText_channels.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
 
-		rec_win.Add( self.m_staticText_fileName, 0, wx.ALL, 5 )
+		rec_win.Add( self.m_staticText_channels, 0, wx.ALL, 5 )
 
-		self.m_textCtrl_recFileName = wx.TextCtrl( self, wx.ID_ANY, u"rec_untitled1.wav", wx.DefaultPosition, wx.Size( 110,-1 ), 0 )
-		rec_win.Add( self.m_textCtrl_recFileName, 0, wx.ALL, 5 )
+		m_choice_channelsChoices = [ u"Mono", u"Stereo" ]
+		self.m_choice_channels = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 80,-1 ), m_choice_channelsChoices, 0 )
+		self.m_choice_channels.SetSelection( 1 )
+		rec_win.Add( self.m_choice_channels, 0, wx.ALL, 5 )
 
 		self.m_staticText_sampRate = wx.StaticText( self, wx.ID_ANY, u"Samp Rate:", wx.DefaultPosition, wx.Size( 60,-1 ), 0 )
 		self.m_staticText_sampRate.Wrap( -1 )
@@ -109,18 +111,6 @@ class speech_win ( wx.Frame ):
 
 		rec_win.Add( self.m_staticText_hz, 0, wx.ALL, 5 )
 
-		self.m_staticText_channels = wx.StaticText( self, wx.ID_ANY, u"Channels:", wx.DefaultPosition, wx.Size( 60,-1 ), 0 )
-		self.m_staticText_channels.Wrap( -1 )
-
-		self.m_staticText_channels.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
-
-		rec_win.Add( self.m_staticText_channels, 0, wx.ALL, 5 )
-
-		m_choice_channelsChoices = [ u"Mono", u"Stereo" ]
-		self.m_choice_channels = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 80,-1 ), m_choice_channelsChoices, 0 )
-		self.m_choice_channels.SetSelection( 1 )
-		rec_win.Add( self.m_choice_channels, 0, wx.ALL, 5 )
-
 		self.m_staticText_bitDepth = wx.StaticText( self, wx.ID_ANY, u"Bit Depth:", wx.DefaultPosition, wx.Size( 60,-1 ), 0 )
 		self.m_staticText_bitDepth.Wrap( -1 )
 
@@ -140,10 +130,20 @@ class speech_win ( wx.Frame ):
 
 		rec_win.Add( self.m_staticText_bits, 0, wx.ALL, 5 )
 
-		self.m_staticText_null1 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 30,-1 ), 0 )
-		self.m_staticText_null1.Wrap( -1 )
+		self.m_staticText_recFileName = wx.StaticText( self, wx.ID_ANY, u"File Name:", wx.DefaultPosition, wx.Size( 60,-1 ), 0 )
+		self.m_staticText_recFileName.Wrap( -1 )
 
-		rec_win.Add( self.m_staticText_null1, 0, wx.ALL, 5 )
+		self.m_staticText_recFileName.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+
+		rec_win.Add( self.m_staticText_recFileName, 0, wx.ALL, 5 )
+
+		self.m_textCtrl_recFileName = wx.TextCtrl( self, wx.ID_ANY, u"rec_untitled1.wav", wx.DefaultPosition, wx.Size( 110,-1 ), 0 )
+		rec_win.Add( self.m_textCtrl_recFileName, 0, wx.ALL, 5 )
+
+		self.m_staticText_null2 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 30,-1 ), 0 )
+		self.m_staticText_null2.Wrap( -1 )
+
+		rec_win.Add( self.m_staticText_null2, 0, wx.ALL, 5 )
 
 		self.m_button_record = wx.Button( self, wx.ID_ANY, u"Record Start", wx.DefaultPosition, wx.Size( 110,-1 ), 0 )
 		rec_win.Add( self.m_button_record, 0, wx.ALL, 5 )
@@ -170,29 +170,20 @@ class speech_win ( wx.Frame ):
 
 		ctrl_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
 
-		self.m_staticText_conv = wx.StaticText( self, wx.ID_ANY, u"Audio/Text  Conversation Configuration and Display:", wx.DefaultPosition, wx.Size( 720,-1 ), 0 )
+		self.m_staticText_conv = wx.StaticText( self, wx.ID_ANY, u"Audio/Text  Conversation Configuration and Display:", wx.DefaultPosition, wx.Size( 290,-1 ), 0 )
 		self.m_staticText_conv.Wrap( -1 )
 
 		self.m_staticText_conv.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
 
 		ctrl_win.Add( self.m_staticText_conv, 0, wx.ALL, 5 )
 
-		self.m_staticText_null3 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 17,-1 ), 0 )
+		self.m_button_asrttsTextClear = wx.Button( self, wx.ID_ANY, u"Clear Text", wx.DefaultPosition, wx.Size( 80,-1 ), 0 )
+		ctrl_win.Add( self.m_button_asrttsTextClear, 0, wx.ALL, 5 )
+
+		self.m_staticText_null3 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 100,-1 ), 0 )
 		self.m_staticText_null3.Wrap( -1 )
 
 		ctrl_win.Add( self.m_staticText_null3, 0, wx.ALL, 5 )
-
-		self.m_staticText_engine = wx.StaticText( self, wx.ID_ANY, u"Engine:", wx.DefaultPosition, wx.Size( 40,-1 ), 0 )
-		self.m_staticText_engine.Wrap( -1 )
-
-		self.m_staticText_engine.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
-
-		ctrl_win.Add( self.m_staticText_engine, 0, wx.ALL, 5 )
-
-		m_choice_engineChoices = [ u"CMU Sphinx", u"Google Speech Recognition", u"Google Cloud Speech API", u"Wit.ai", u"Microsoft Bing Voice Recognition", u"Houndify API", u"IBM Speech to Text", u"Snowboy Hotword Detection" ]
-		self.m_choice_engine = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 180,-1 ), m_choice_engineChoices, 0 )
-		self.m_choice_engine.SetSelection( 0 )
-		ctrl_win.Add( self.m_choice_engine, 0, wx.ALL, 5 )
 
 		self.m_staticText_lang = wx.StaticText( self, wx.ID_ANY, u"Language:", wx.Point( -1,-1 ), wx.Size( -1,-1 ), 0 )
 		self.m_staticText_lang.Wrap( -1 )
@@ -205,6 +196,38 @@ class speech_win ( wx.Frame ):
 		self.m_choice_lang = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, m_choice_langChoices, 0 )
 		self.m_choice_lang.SetSelection( 0 )
 		ctrl_win.Add( self.m_choice_lang, 0, wx.ALL, 5 )
+
+		self.m_staticText_asrEngine = wx.StaticText( self, wx.ID_ANY, u"ASR Engine:", wx.DefaultPosition, wx.Size( 70,-1 ), 0 )
+		self.m_staticText_asrEngine.Wrap( -1 )
+
+		self.m_staticText_asrEngine.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+
+		ctrl_win.Add( self.m_staticText_asrEngine, 0, wx.ALL, 5 )
+
+		m_choice_asrEngineChoices = [ u"CMU Sphinx", u"Google Speech Recognition", u"Google Cloud Speech API", u"Wit.ai", u"Microsoft Bing Voice Recognition", u"Houndify API", u"IBM Speech to Text", u"Snowboy Hotword Detection" ]
+		self.m_choice_asrEngine = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 180,-1 ), m_choice_asrEngineChoices, 0 )
+		self.m_choice_asrEngine.SetSelection( 0 )
+		ctrl_win.Add( self.m_choice_asrEngine, 0, wx.ALL, 5 )
+
+		self.m_staticText_asrId = wx.StaticText( self, wx.ID_ANY, u"Id:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText_asrId.Wrap( -1 )
+
+		self.m_staticText_asrId.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+
+		ctrl_win.Add( self.m_staticText_asrId, 0, wx.ALL, 5 )
+
+		self.m_textCtrl_asrId = wx.TextCtrl( self, wx.ID_ANY, u"N/A", wx.DefaultPosition, wx.Size( 150,-1 ), 0 )
+		ctrl_win.Add( self.m_textCtrl_asrId, 0, wx.ALL, 5 )
+
+		self.m_staticText_asrKey = wx.StaticText( self, wx.ID_ANY, u"Key:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText_asrKey.Wrap( -1 )
+
+		self.m_staticText_asrKey.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+
+		ctrl_win.Add( self.m_staticText_asrKey, 0, wx.ALL, 5 )
+
+		self.m_textCtrl_asrKey = wx.TextCtrl( self, wx.ID_ANY, u"N/A", wx.DefaultPosition, wx.Size( 234,-1 ), 0 )
+		ctrl_win.Add( self.m_textCtrl_asrKey, 0, wx.ALL, 5 )
 
 
 		show_win.Add( ctrl_win, 1, wx.EXPAND, 5 )
@@ -262,6 +285,7 @@ class speech_win ( wx.Frame ):
 		self.m_genericDirCtrl_audioDir.Bind( wx.EVT_TREE_SEL_CHANGED, self.viewAudio )
 		self.m_button_play.Bind( wx.EVT_BUTTON, self.playAudio )
 		self.m_button_record.Bind( wx.EVT_BUTTON, self.recordAudio )
+		self.m_button_asrttsTextClear.Bind( wx.EVT_BUTTON, self.clearAsrTtsText )
 		self.m_button_asr.Bind( wx.EVT_BUTTON, self.audioSpeechRecognition )
 		self.m_button_tts.Bind( wx.EVT_BUTTON, self.textToSpeech )
 
@@ -283,6 +307,9 @@ class speech_win ( wx.Frame ):
 		event.Skip()
 
 	def recordAudio( self, event ):
+		event.Skip()
+
+	def clearAsrTtsText( self, event ):
 		event.Skip()
 
 	def audioSpeechRecognition( self, event ):

@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef2ad98f-3a78-4e39-8461-d6cf357b4bbc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/gui/tinyPySPEECH.fbp" beforeDir="false" afterPath="$PROJECT_DIR$/gui/tinyPySPEECH.fbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/tinypyspeech_win.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/tinypyspeech_win.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tinypyspeech_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tinypyspeech_main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -139,7 +137,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="427" y="199" width="1030" height="805" extended-state="0" />
+    <frame x="427" y="199" width="1030" height="805" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />

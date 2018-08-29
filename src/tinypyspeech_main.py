@@ -168,7 +168,7 @@ class mainWin(tinypyspeech_win.speech_win):
             fileName = self.m_textCtrl_recFileName.GetLineText(0)
             if fileName == '':
                 fileName = 'rec_untitled1.wav'
-            self.wavPath = os.path.join(os.path.dirname(os.path.abspath(os.path.dirname(__file__))), 'audio', 'record', fileName)
+            self.wavPath = os.path.join(os.path.dirname(os.path.abspath(os.path.dirname(__file__))), 'conv', 'rec', fileName)
             self.wavSampRate = int(self.m_choice_sampRate.GetString(self.m_choice_sampRate.GetSelection()))
             channels = self.m_choice_channels.GetString(self.m_choice_channels.GetSelection())
             if channels == 'Mono':
@@ -264,14 +264,20 @@ class mainWin(tinypyspeech_win.speech_win):
                 languageType = 'zh-CN'
             else: # languageType == 'US English':
                 languageType = 'en-US'
-
-            engineType = self.m_choice_engine.GetString(self.m_choice_engine.GetSelection())
+            engineType = self.m_choice_asrEngine.GetString(self.m_choice_asrEngine.GetSelection())
             if engineType == 'CMU Sphinx':
                 # Recognize speech using Sphinx
                 try:
                     speechText = speechObj.recognize_sphinx(speechAudio, language=languageType)
                     self.m_textCtrl_asrttsText.write(speechText)
                     self.statusBar.SetStatusText("ASR Conversation Info: Successfully")
+                    fileName = self.m_textCtrl_asrFileName.GetLineText(0)
+                    if fileName == '':
+                        fileName = 'asr_untitled1.txt'
+                    asrFilePath = os.path.join(os.path.dirname(os.path.abspath(os.path.dirname(__file__))), 'conv', 'asr', fileName)
+                    asrFileObj = open(asrFilePath, 'wb')
+                    asrFileObj.write(speechText)
+                    asrFileObj.close()
                 except speech_recognition.UnknownValueError:
                     self.statusBar.SetStatusText("ASR Conversation Info: Sphinx could not understand audio")
                 except speech_recognition.RequestError as e:
@@ -281,6 +287,9 @@ class mainWin(tinypyspeech_win.speech_win):
 
     def textToSpeech( self, event ):
         event.Skip()
+
+    def clearAsrTtsText( self, event ):
+        self.m_textCtrl_asrttsText.Clear()
 
     def showHomepageInfo( self, event ):
         messageText = (('Code: \n    https://github.com/JayHeng/tinyPySPEECH.git \n') +
@@ -296,7 +305,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"tinyPySPEECH v0.8.0")
+    main_win.SetTitle(u"tinyPySPEECH v0.8.1")
     main_win.Show()
 
     app.MainLoop()
