@@ -6,6 +6,7 @@ import numpy
 import matplotlib
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 from matplotlib.figure import Figure
+import matplotlib.tri as Tri
 
 import wave
 import pyaudio
@@ -134,6 +135,37 @@ class wavCanvasPanel(wx.Panel):
             # Note!!!: draw() must be called if figure has been cleared once
             self.wavCanvas.draw()
 
+    def showWelcome (self):
+        self.wavFigure.clear()
+        # Get Code from below link
+        # https://matplotlib.org/gallery/images_contours_and_fields/tripcolor_demo.html#sphx-glr-gallery-images-contours-and-fields-tripcolor-demo-py
+        n_angles = 36
+        n_radii = 8
+        min_radius = 0.25
+        radii = numpy.linspace(min_radius, 0.95, n_radii)
+        angles = numpy.linspace(0, 2 * numpy.pi, n_angles, endpoint=False)
+        angles = numpy.repeat(angles[..., numpy.newaxis], n_radii, axis=1)
+        angles[:, 1::2] += numpy.pi / n_angles
+        x = (radii * numpy.cos(angles)).flatten()
+        y = (radii * numpy.sin(angles)).flatten()
+        z = (numpy.cos(radii) * numpy.cos(3 * angles)).flatten()
+        triang = Tri.Triangulation(x, y)
+        triang.set_mask(numpy.hypot(x[triang.triangles].mean(axis=1),
+                                    y[triang.triangles].mean(axis=1))
+                        < min_radius)
+        welcomeAxes = self.wavFigure.add_axes([0.13,0.2,0.7,0.7], facecolor='#404040')
+        #welcomeAxes.set_aspect('equal')
+        welcomeAxes.tripcolor(triang, z, shading='flat')
+        # Set some properties
+        welcomeAxes.set_title('Welcome to use tinyPySPEECH', color='w')
+        welcomeAxes.set_xticks([])
+        welcomeAxes.set_yticks([])
+        welcomeAxes.spines['top'].set_visible(False)
+        welcomeAxes.spines['right'].set_visible(False)
+        welcomeAxes.spines['bottom'].set_visible(False)
+        welcomeAxes.spines['left'].set_visible(False)
+        self.wavCanvas.draw()
+
 class mainWin(tinypyspeech_win.speech_win):
 
     def __init__(self, parent):
@@ -144,6 +176,7 @@ class mainWin(tinypyspeech_win.speech_win):
         # Start -> Play -> Pause -> Resume -> End
         self.playState = AUDIO_PLAY_STATE_START
         self.statusBar.SetFieldsCount(1)
+        self.wavPanel.showWelcome()
 
     def viewAudio( self, event ):
         self.wavPath =  self.m_genericDirCtrl_audioDir.GetFilePath()
@@ -305,7 +338,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"tinyPySPEECH v0.8.1")
+    main_win.SetTitle(u"tinyPySPEECH v0.8.2")
     main_win.Show()
 
     app.MainLoop()
