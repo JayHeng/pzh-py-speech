@@ -2,7 +2,7 @@
 import wx
 import sys, os
 sys.path.append(os.path.abspath("../gui"))
-import tinypyspeech_win
+import jayspyspeech_win
 import numpy
 import matplotlib
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
@@ -159,7 +159,7 @@ class wavCanvasPanel(wx.Panel):
         #welcomeAxes.set_aspect('equal')
         welcomeAxes.tripcolor(triang, z, shading='flat')
         # Set some properties
-        welcomeAxes.set_title('Welcome to use tinyPySPEECH', color='w')
+        welcomeAxes.set_title('Welcome to use JaysPySPEECH', color='w')
         welcomeAxes.set_xticks([])
         welcomeAxes.set_yticks([])
         welcomeAxes.spines['top'].set_visible(False)
@@ -168,10 +168,10 @@ class wavCanvasPanel(wx.Panel):
         welcomeAxes.spines['left'].set_visible(False)
         self.wavCanvas.draw()
 
-class mainWin(tinypyspeech_win.speech_win):
+class mainWin(jayspyspeech_win.speech_win):
 
     def __init__(self, parent):
-        tinypyspeech_win.speech_win.__init__(self, parent)
+        jayspyspeech_win.speech_win.__init__(self, parent)
         self.wavPanel = wavCanvasPanel(self.m_panel_plot)
         self.m_genericDirCtrl_audioDir.SetFilter("Audio files (*.wav)|*.wav")
         self.isRecording = False
@@ -357,7 +357,7 @@ class mainWin(tinypyspeech_win.speech_win):
         self.m_textCtrl_asrttsText.Clear()
 
     def showHomepageInfo( self, event ):
-        messageText = (('Code: \n    https://github.com/JayHeng/tinyPySPEECH.git \n') +
+        messageText = (('Code: \n    https://github.com/JayHeng/JaysPySPEECH.git \n') +
                        ('Doc: \n    https://www.cnblogs.com/henjay724/p/9541867.html \n'))
         wx.MessageBox(messageText, "Homepage", wx.OK | wx.ICON_INFORMATION)
 
@@ -370,7 +370,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"tinyPySPEECH v0.9.0")
+    main_win.SetTitle(u"JaysPySPEECH v0.9.0")
     main_win.Show()
 
     app.MainLoop()

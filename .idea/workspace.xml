@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ef2ad98f-3a78-4e39-8461-d6cf357b4bbc" name="Default Changelist" comment="">
+    <list default="true" id="314d8fa7-d321-4ff9-b6bd-8a753c54f0a3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/tinyPySPEECH.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/tinyPySPEECH.fbp" beforeDir="false" afterPath="$PROJECT_DIR$/gui/tinyPySPEECH.fbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/tinypyspeech_win.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/tinypyspeech_win.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tinypyspeech_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tinypyspeech_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/tinyPySPEECH.fbp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/tinypyspeech_win.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tinypyspeech_main.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,15 +17,13 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FUSProjectUsageTrigger">
-    <session id="1568688510">
+    <session id="-1668035033">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="7" />
+          <entry key="project.closed" value="2" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.1" value="2" />
-          <entry key="project.open.time.6" value="4" />
-          <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="8" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -38,15 +39,12 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/tinypyspeech_main.py">
+        <entry file="file://$PROJECT_DIR$/src/jayspyspeech_main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="181" lean-forward="true" selection-start-line="181" selection-end-line="181" />
-              <folding>
-                <element signature="e#23#32#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="209">
+              <caret line="12" column="14" lean-forward="true" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -57,8 +55,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="323" />
-    <option name="y" value="242" />
+    <option name="x" value="443" />
+    <option name="y" value="232" />
     <option name="width" value="1030" />
     <option name="height" value="805" />
   </component>
@@ -72,12 +70,12 @@
         <subPane>
           <expand>
             <path>
-              <item name="tinyPySPEECH" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tinyPySPEECH" type="462c0819:PsiDirectoryNode" />
+              <item name="JaysPySPEECH" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JaysPySPEECH" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="tinyPySPEECH" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tinyPySPEECH" type="462c0819:PsiDirectoryNode" />
+              <item name="JaysPySPEECH" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JaysPySPEECH" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -99,8 +97,8 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="tinypyspeech_main" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="tinyPySPEECH" />
+    <configuration name="jayspyspeech_main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="JaysPySPEECH" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -111,7 +109,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/tinypyspeech_main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/jayspyspeech_main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -122,7 +120,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.tinypyspeech_main" />
+        <item itemvalue="Python.jayspyspeech_main" />
       </list>
     </recent_temporary>
   </component>
@@ -131,16 +129,16 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ef2ad98f-3a78-4e39-8461-d6cf357b4bbc" name="Default Changelist" comment="" />
-      <created>1534166175304</created>
+      <changelist id="314d8fa7-d321-4ff9-b6bd-8a753c54f0a3" name="Default Changelist" comment="" />
+      <created>1535641080484</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1534166175304</updated>
+      <updated>1535641080484</updated>
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="323" y="242" width="1030" height="805" extended-state="0" />
+    <frame x="443" y="232" width="1030" height="805" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
@@ -148,8 +146,8 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.48435172" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39940387" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32935917" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -166,13 +164,10 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/tinypyspeech_main.py">
+    <entry file="file://$PROJECT_DIR$/src/jayspyspeech_main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="181" lean-forward="true" selection-start-line="181" selection-end-line="181" />
-          <folding>
-            <element signature="e#23#32#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="209">
+          <caret line="12" column="14" lean-forward="true" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
         </state>
       </provider>
     </entry>
