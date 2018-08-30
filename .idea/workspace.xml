@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef2ad98f-3a78-4e39-8461-d6cf357b4bbc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/tinyPySPEECH.fbp" beforeDir="false" afterPath="$PROJECT_DIR$/gui/tinyPySPEECH.fbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/tinypyspeech_win.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/tinypyspeech_win.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tinypyspeech_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tinypyspeech_main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,12 +17,12 @@
     <session id="1568688510">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
+          <entry key="project.closed" value="7" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="2" />
-          <entry key="project.open.time.6" value="3" />
+          <entry key="project.open.time.6" value="4" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="7" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -39,10 +42,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tinypyspeech_main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="742">
-              <caret line="178" column="47" selection-start-line="178" selection-start-column="47" selection-end-line="178" selection-end-column="47" />
+            <state relative-caret-position="76">
+              <caret line="181" lean-forward="true" selection-start-line="181" selection-end-line="181" />
               <folding>
-                <element signature="e#0#9#0" expanded="true" />
+                <element signature="e#23#32#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -55,7 +58,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="323" />
-    <option name="y" value="448" />
+    <option name="y" value="242" />
     <option name="width" value="1030" />
     <option name="height" value="805" />
   </component>
@@ -64,6 +67,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -80,7 +84,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="RunDashboard">
@@ -137,7 +140,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="323" y="448" width="1030" height="805" extended-state="0" />
+    <frame x="323" y="242" width="1030" height="805" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
@@ -145,7 +148,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.48435172" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.48435172" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39940387" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -165,10 +168,10 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/tinypyspeech_main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="742">
-          <caret line="178" column="47" selection-start-line="178" selection-start-column="47" selection-end-line="178" selection-end-column="47" />
+        <state relative-caret-position="76">
+          <caret line="181" lean-forward="true" selection-start-line="181" selection-end-line="181" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#23#32#0" expanded="true" />
           </folding>
         </state>
       </provider>

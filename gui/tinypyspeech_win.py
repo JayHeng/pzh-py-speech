@@ -229,6 +229,18 @@ class speech_win ( wx.Frame ):
 		self.m_textCtrl_asrKey = wx.TextCtrl( self, wx.ID_ANY, u"N/A", wx.DefaultPosition, wx.Size( 234,-1 ), 0 )
 		ctrl_win.Add( self.m_textCtrl_asrKey, 0, wx.ALL, 5 )
 
+		self.m_staticText_ttsEngine = wx.StaticText( self, wx.ID_ANY, u"TTS Engine:", wx.DefaultPosition, wx.Size( 70,-1 ), 0 )
+		self.m_staticText_ttsEngine.Wrap( -1 )
+
+		self.m_staticText_ttsEngine.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+
+		ctrl_win.Add( self.m_staticText_ttsEngine, 0, wx.ALL, 5 )
+
+		m_choice_ttsEngineChoices = [ u"pyttsx3 - SAPI5", u"gTTS" ]
+		self.m_choice_ttsEngine = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 180,-1 ), m_choice_ttsEngineChoices, 0 )
+		self.m_choice_ttsEngine.SetSelection( 0 )
+		ctrl_win.Add( self.m_choice_ttsEngine, 0, wx.ALL, 5 )
+
 
 		show_win.Add( ctrl_win, 1, wx.EXPAND, 5 )
 
@@ -243,13 +255,6 @@ class speech_win ( wx.Frame ):
 		conv_win.Add( text_win, 1, wx.EXPAND, 5 )
 
 		asrtts_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
-
-		self.m_staticText_null4 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 230,-1 ), 0 )
-		self.m_staticText_null4.Wrap( -1 )
-
-		self.m_staticText_null4.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
-
-		asrtts_win.Add( self.m_staticText_null4, 0, wx.ALL, 5 )
 
 		self.m_button_asr = wx.Button( self, wx.ID_ANY, u"ASR", wx.DefaultPosition, wx.Size( 40,-1 ), 0 )
 		asrtts_win.Add( self.m_button_asr, 0, wx.ALL, 5 )

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*
 import wx
 import sys, os
 sys.path.append(os.path.abspath("../gui"))
@@ -11,6 +12,7 @@ import matplotlib.tri as Tri
 import wave
 import pyaudio
 import speech_recognition
+import pyttsx3
 
 MAX_AUDIO_CHANNEL = 8
 #unit: inch
@@ -286,10 +288,10 @@ class mainWin(tinypyspeech_win.speech_win):
 
     def audioSpeechRecognition( self, event ):
         if os.path.isfile(self.wavPath):
-            speechObj = speech_recognition.Recognizer()
+            asrObj = speech_recognition.Recognizer()
             with speech_recognition.AudioFile(self.wavPath) as source:
                 # Read the entire audio file
-                speechAudio = speechObj.record(source)
+                speechAudio = asrObj.record(source)
             self.m_textCtrl_asrttsText.Clear()
             # Get language type
             languageType = self.m_choice_lang.GetString(self.m_choice_lang.GetSelection())
@@ -301,7 +303,7 @@ class mainWin(tinypyspeech_win.speech_win):
             if engineType == 'CMU Sphinx':
                 # Recognize speech using Sphinx
                 try:
-                    speechText = speechObj.recognize_sphinx(speechAudio, language=languageType)
+                    speechText = asrObj.recognize_sphinx(speechAudio, language=languageType)
                     self.m_textCtrl_asrttsText.write(speechText)
                     self.statusBar.SetStatusText("ASR Conversation Info: Successfully")
                     fileName = self.m_textCtrl_asrFileName.GetLineText(0)
@@ -316,10 +318,40 @@ class mainWin(tinypyspeech_win.speech_win):
                 except speech_recognition.RequestError as e:
                     self.statusBar.SetStatusText("ASR Conversation Info: Sphinx error; {0}".format(e))
             else:
-                self.statusBar.SetStatusText("ASR Conversation Info: Unavailable Engine")
+                self.statusBar.SetStatusText("ASR Conversation Info: Unavailable ASR Engine")
 
     def textToSpeech( self, event ):
-        event.Skip()
+        languageType = self.m_choice_lang.GetString(self.m_choice_lang.GetSelection())
+        if languageType == 'Mandarin Chinese':
+            languageType = 'zh-CN'
+        else: # languageType == 'US English':
+            languageType = 'EN-US'
+        # Get text from m_textCtrl_asrttsText
+        lines = self.m_textCtrl_asrttsText.GetNumberOfLines()
+        if lines != 0:
+            data = ''
+            for i in range(0, lines):
+                data += self.m_textCtrl_asrttsText.GetLineText(i)
+        else:
+            return
+        engineType = self.m_choice_ttsEngine.GetString(self.m_choice_ttsEngine.GetSelection())
+        if engineType == 'pyttsx3 - SAPI5':
+            ttsObj = pyttsx3.init()
+            hasVoice = False
+            voices = ttsObj.getProperty('voices')
+            for voice in voices:
+                #print ('id = {} \nname = {} \n'.format(voice.id, voice.name))
+                if voice.id.find(languageType) != -1:
+                    hasVoice = True
+                    break
+            if hasVoice:
+                ttsObj.setProperty('voice', voice.id)
+                ttsObj.say(data)
+                ttsObj.runAndWait()
+            else:
+                self.statusBar.SetStatusText("TTS Conversation Info: Language is not supported by current PC")
+        else:
+            self.statusBar.SetStatusText("TTS Conversation Info: Unavailable TTS Engine")
 
     def clearAsrTtsText( self, event ):
         self.m_textCtrl_asrttsText.Clear()
@@ -338,7 +370,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"tinyPySPEECH v0.8.2")
+    main_win.SetTitle(u"tinyPySPEECH v0.9.0")
     main_win.Show()
 
     app.MainLoop()
