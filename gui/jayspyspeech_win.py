@@ -241,6 +241,18 @@ class speech_win ( wx.Frame ):
 		self.m_choice_ttsEngine.SetSelection( 0 )
 		ctrl_win.Add( self.m_choice_ttsEngine, 0, wx.ALL, 5 )
 
+		self.m_staticText_voice = wx.StaticText( self, wx.ID_ANY, u"Voice:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText_voice.Wrap( -1 )
+
+		self.m_staticText_voice.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+
+		ctrl_win.Add( self.m_staticText_voice, 0, wx.ALL, 5 )
+
+		m_choice_voiceChoices = []
+		self.m_choice_voice = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 300,-1 ), m_choice_voiceChoices, 0 )
+		self.m_choice_voice.SetSelection( 0 )
+		ctrl_win.Add( self.m_choice_voice, 0, wx.ALL, 5 )
+
 
 		show_win.Add( ctrl_win, 1, wx.EXPAND, 5 )
 
@@ -291,6 +303,7 @@ class speech_win ( wx.Frame ):
 		self.m_button_play.Bind( wx.EVT_BUTTON, self.playAudio )
 		self.m_button_record.Bind( wx.EVT_BUTTON, self.recordAudio )
 		self.m_button_asrttsTextClear.Bind( wx.EVT_BUTTON, self.clearAsrTtsText )
+		self.m_choice_voice.Bind( wx.EVT_ENTER_WINDOW, self.refreshVoice )
 		self.m_button_asr.Bind( wx.EVT_BUTTON, self.audioSpeechRecognition )
 		self.m_button_tts.Bind( wx.EVT_BUTTON, self.textToSpeech )
 
@@ -315,6 +328,9 @@ class speech_win ( wx.Frame ):
 		event.Skip()
 
 	def clearAsrTtsText( self, event ):
+		event.Skip()
+
+	def refreshVoice( self, event ):
 		event.Skip()
 
 	def audioSpeechRecognition( self, event ):

@@ -179,6 +179,7 @@ class mainWin(jayspyspeech_win.speech_win):
         self.playState = AUDIO_PLAY_STATE_START
         self.statusBar.SetFieldsCount(1)
         self.wavPanel.showWelcome()
+        self.ttsObj = None
 
     def viewAudio( self, event ):
         self.wavPath =  self.m_genericDirCtrl_audioDir.GetFilePath()
@@ -286,6 +287,16 @@ class mainWin(jayspyspeech_win.speech_win):
             else:
                 pass
 
+    def getLanguageSelection(self):
+        languageType = self.m_choice_lang.GetString(self.m_choice_lang.GetSelection())
+        if languageType == 'Mandarin Chinese':
+            languageType = 'zh-CN'
+            languageName = 'Chinese'
+        else: # languageType == 'US English':
+            languageType = 'en-US'
+            languageName = 'English'
+        return languageType, languageName
+
     def audioSpeechRecognition( self, event ):
         if os.path.isfile(self.wavPath):
             asrObj = speech_recognition.Recognizer()
@@ -294,11 +305,7 @@ class mainWin(jayspyspeech_win.speech_win):
                 speechAudio = asrObj.record(source)
             self.m_textCtrl_asrttsText.Clear()
             # Get language type
-            languageType = self.m_choice_lang.GetString(self.m_choice_lang.GetSelection())
-            if languageType == 'Mandarin Chinese':
-                languageType = 'zh-CN'
-            else: # languageType == 'US English':
-                languageType = 'en-US'
+            languageType, languageName = self.getLanguageSelection()
             engineType = self.m_choice_asrEngine.GetString(self.m_choice_asrEngine.GetSelection())
             if engineType == 'CMU Sphinx':
                 # Recognize speech using Sphinx
@@ -320,12 +327,31 @@ class mainWin(jayspyspeech_win.speech_win):
             else:
                 self.statusBar.SetStatusText("ASR Conversation Info: Unavailable ASR Engine")
 
+    def refreshVoice( self, event ):
+        languageType, languageName = self.getLanguageSelection()
+        engineType = self.m_choice_ttsEngine.GetString(self.m_choice_ttsEngine.GetSelection())
+        if engineType == 'pyttsx3 - SAPI5':
+            if self.ttsObj == None:
+                 self.ttsObj = pyttsx3.init()
+            voices = self.ttsObj.getProperty('voices')
+            voiceItems = [None] * len(voices)
+            itemIndex = 0
+            for voice in voices:
+                voiceId = voice.id.lower()
+                voiceName = voice.name.lower()
+                if (voiceId.find(languageType.lower()) != -1) or (voiceName.find(languageName.lower()) != -1):
+                    voiceItems[itemIndex] = voice.name
+                    itemIndex += 1
+            voiceItems = voiceItems[0:itemIndex]
+            self.m_choice_voice.Clear()
+            self.m_choice_voice.SetItems(voiceItems)
+        else:
+            voiceItem = ['N/A']
+            self.m_choice_voice.Clear()
+            self.m_choice_voice.SetItems(voiceItem)
+
     def textToSpeech( self, event ):
-        languageType = self.m_choice_lang.GetString(self.m_choice_lang.GetSelection())
-        if languageType == 'Mandarin Chinese':
-            languageType = 'zh-CN'
-        else: # languageType == 'US English':
-            languageType = 'EN-US'
+        languageType, languageName = self.getLanguageSelection()
         # Get text from m_textCtrl_asrttsText
         lines = self.m_textCtrl_asrttsText.GetNumberOfLines()
         if lines != 0:
@@ -336,18 +362,23 @@ class mainWin(jayspyspeech_win.speech_win):
             return
         engineType = self.m_choice_ttsEngine.GetString(self.m_choice_ttsEngine.GetSelection())
         if engineType == 'pyttsx3 - SAPI5':
-            ttsObj = pyttsx3.init()
+            if self.ttsObj == None:
+                 self.ttsObj = pyttsx3.init()
             hasVoice = False
-            voices = ttsObj.getProperty('voices')
+            voices = self.ttsObj.getProperty('voices')
+            voiceSel = self.m_choice_voice.GetString(self.m_choice_voice.GetSelection())
             for voice in voices:
-                #print ('id = {} \nname = {} \n'.format(voice.id, voice.name))
-                if voice.id.find(languageType) != -1:
-                    hasVoice = True
-                    break
+                #print ('id = {} \nname = {} \nlanguages = {} \n'.format(voice.id, voice.name, voice.languages))
+                voiceId = voice.id.lower()
+                voiceName = voice.name.lower()
+                if (voiceId.find(languageType.lower()) != -1) or (voiceName.find(languageName.lower()) != -1):
+                    if (voiceSel == '') or (voiceSel == voice.name):
+                        hasVoice = True
+                        break
             if hasVoice:
-                ttsObj.setProperty('voice', voice.id)
-                ttsObj.say(data)
-                ttsObj.runAndWait()
+                self.ttsObj.setProperty('voice', voice.id)
+                self.ttsObj.say(data)
+                self.ttsObj.runAndWait()
             else:
                 self.statusBar.SetStatusText("TTS Conversation Info: Language is not supported by current PC")
         else:
@@ -370,7 +401,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"JaysPySPEECH v0.9.0")
+    main_win.SetTitle(u"JaysPySPEECH v0.9.1")
     main_win.Show()
 
     app.MainLoop()
