@@ -74,6 +74,17 @@ class wavCanvasPanel(wx.Panel):
         self.wavAxes = [None] * MAX_AUDIO_CHANNEL
         self.wavCursor = [None] * MAX_AUDIO_CHANNEL
 
+    def fromstring(self, wavData, alignedByte):
+        if alignedByte <= 8:
+            src = numpy.ndarray(len(wavData), numpy.dtype('>i1'), wavData)
+            dest = numpy.zeros(len(wavData) / alignedByte, numpy.dtype('>i8'))
+            for i in range(alignedByte):
+                dest.view(dtype='>i1')[alignedByte-1-i::8] = src.view(dtype='>i1')[i::alignedByte]
+            [hex(x) for x in dest]
+            return True, dest
+        else:
+            return False, wavData
+
     def readWave(self, wavPath, wavInfo):
         if os.path.isfile(wavPath):
             # Open the wav file to get wave data and parameters
@@ -95,11 +106,19 @@ class wavCanvasPanel(wx.Panel):
                 dtype = numpy.int8
             elif wavSampwidth == 2:
                 dtype = numpy.int16
+            elif wavSampwidth == 3:
+                dtype = None
             elif wavSampwidth == 4:
                 dtype = numpy.float32
             else:
-                 return 0, 0, 0
-            retData = numpy.fromstring(wavData, dtype = dtype)
+                return 0, 0, 0
+            if dtype != None:
+                retData = numpy.fromstring(wavData, dtype = dtype)
+            else:
+                # Implement int24 manually
+                status, retData = self.fromstring(wavData, 3)
+                if not status:
+                    return 0, 0, 0
             if wavChannels != 1:
                 retData.shape = -1, wavChannels
                 retData = retData.T
@@ -137,8 +156,8 @@ class wavCanvasPanel(wx.Panel):
                 self.wavAxes[i].set_title('Audio Channel ' + str(i), color='w')
                 self.wavCursor[i] = wavCursor(self.wavAxes[i], waveTime, data)
                 self.wavCanvas.mpl_connect('motion_notify_event', self.wavCursor[i].moveMouse)
-            # Note!!!: draw() must be called if figure has been cleared once
-            self.wavCanvas.draw()
+        # Note!!!: draw() must be called if figure has been cleared once
+        self.wavCanvas.draw()
 
     def showWelcome (self):
         self.wavFigure.clear()
@@ -421,7 +440,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"JaysPySPEECH v0.9.2")
+    main_win.SetTitle(u"JaysPySPEECH v0.9.3")
     main_win.Show()
 
     app.MainLoop()
