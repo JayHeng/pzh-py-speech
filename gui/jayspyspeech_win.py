@@ -17,7 +17,7 @@ import wx.xrc
 class speech_win ( wx.Frame ):
 
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"JaysPySPEECH", pos = wx.DefaultPosition, size = wx.Size( 940,634 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"JaysPySPEECH", pos = wx.DefaultPosition, size = wx.Size( 940,626 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 64, 64, 64 ) )
@@ -130,7 +130,7 @@ class speech_win ( wx.Frame ):
 
 		rec_win.Add( self.m_staticText_bits, 0, wx.ALL, 5 )
 
-		self.m_staticText_recFileName = wx.StaticText( self, wx.ID_ANY, u"File Name:", wx.DefaultPosition, wx.Size( 60,-1 ), 0 )
+		self.m_staticText_recFileName = wx.StaticText( self, wx.ID_ANY, u"File:", wx.DefaultPosition, wx.Size( 30,-1 ), 0 )
 		self.m_staticText_recFileName.Wrap( -1 )
 
 		self.m_staticText_recFileName.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
@@ -197,7 +197,7 @@ class speech_win ( wx.Frame ):
 		self.m_choice_lang.SetSelection( 0 )
 		ctrl_win.Add( self.m_choice_lang, 0, wx.ALL, 5 )
 
-		self.m_staticText_asrEngine = wx.StaticText( self, wx.ID_ANY, u"ASR Engine:", wx.DefaultPosition, wx.Size( 70,-1 ), 0 )
+		self.m_staticText_asrEngine = wx.StaticText( self, wx.ID_ANY, u"ASR Engine:", wx.DefaultPosition, wx.Size( 63,-1 ), 0 )
 		self.m_staticText_asrEngine.Wrap( -1 )
 
 		self.m_staticText_asrEngine.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
@@ -205,9 +205,14 @@ class speech_win ( wx.Frame ):
 		ctrl_win.Add( self.m_staticText_asrEngine, 0, wx.ALL, 5 )
 
 		m_choice_asrEngineChoices = [ u"CMU Sphinx", u"Google Speech Recognition", u"Google Cloud Speech API", u"Wit.ai", u"Microsoft Bing Voice Recognition", u"Houndify API", u"IBM Speech to Text", u"Snowboy Hotword Detection" ]
-		self.m_choice_asrEngine = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 180,-1 ), m_choice_asrEngineChoices, 0 )
+		self.m_choice_asrEngine = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 155,-1 ), m_choice_asrEngineChoices, 0 )
 		self.m_choice_asrEngine.SetSelection( 0 )
 		ctrl_win.Add( self.m_choice_asrEngine, 0, wx.ALL, 5 )
+
+		self.m_staticText_null4 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 8,-1 ), 0 )
+		self.m_staticText_null4.Wrap( -1 )
+
+		ctrl_win.Add( self.m_staticText_null4, 0, wx.ALL, 5 )
 
 		self.m_staticText_asrId = wx.StaticText( self, wx.ID_ANY, u"Id:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText_asrId.Wrap( -1 )
@@ -226,10 +231,10 @@ class speech_win ( wx.Frame ):
 
 		ctrl_win.Add( self.m_staticText_asrKey, 0, wx.ALL, 5 )
 
-		self.m_textCtrl_asrKey = wx.TextCtrl( self, wx.ID_ANY, u"N/A", wx.DefaultPosition, wx.Size( 234,-1 ), 0 )
+		self.m_textCtrl_asrKey = wx.TextCtrl( self, wx.ID_ANY, u"N/A", wx.DefaultPosition, wx.Size( 249,-1 ), 0 )
 		ctrl_win.Add( self.m_textCtrl_asrKey, 0, wx.ALL, 5 )
 
-		self.m_staticText_ttsEngine = wx.StaticText( self, wx.ID_ANY, u"TTS Engine:", wx.DefaultPosition, wx.Size( 70,-1 ), 0 )
+		self.m_staticText_ttsEngine = wx.StaticText( self, wx.ID_ANY, u"TTS Engine:", wx.DefaultPosition, wx.Size( 63,-1 ), 0 )
 		self.m_staticText_ttsEngine.Wrap( -1 )
 
 		self.m_staticText_ttsEngine.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
@@ -237,7 +242,7 @@ class speech_win ( wx.Frame ):
 		ctrl_win.Add( self.m_staticText_ttsEngine, 0, wx.ALL, 5 )
 
 		m_choice_ttsEngineChoices = [ u"pyttsx3 - SAPI5", u"gTTS" ]
-		self.m_choice_ttsEngine = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 180,-1 ), m_choice_ttsEngineChoices, 0 )
+		self.m_choice_ttsEngine = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 155,-1 ), m_choice_ttsEngineChoices, 0 )
 		self.m_choice_ttsEngine.SetSelection( 0 )
 		ctrl_win.Add( self.m_choice_ttsEngine, 0, wx.ALL, 5 )
 
@@ -249,9 +254,21 @@ class speech_win ( wx.Frame ):
 		ctrl_win.Add( self.m_staticText_voice, 0, wx.ALL, 5 )
 
 		m_choice_voiceChoices = []
-		self.m_choice_voice = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 300,-1 ), m_choice_voiceChoices, 0 )
+		self.m_choice_voice = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 285,-1 ), m_choice_voiceChoices, 0 )
 		self.m_choice_voice.SetSelection( 0 )
 		ctrl_win.Add( self.m_choice_voice, 0, wx.ALL, 5 )
+
+		self.m_staticText_ttwEngine = wx.StaticText( self, wx.ID_ANY, u"TTW Engine: ", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText_ttwEngine.Wrap( -1 )
+
+		self.m_staticText_ttwEngine.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+
+		ctrl_win.Add( self.m_staticText_ttwEngine, 0, wx.ALL, 5 )
+
+		m_choice_ttwEngineChoices = [ u"eSpeak TTS", u"Festival SSS" ]
+		self.m_choice_ttwEngine = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 65,-1 ), m_choice_ttwEngineChoices, 0 )
+		self.m_choice_ttwEngine.SetSelection( 0 )
+		ctrl_win.Add( self.m_choice_ttwEngine, 0, wx.ALL, 5 )
 
 
 		show_win.Add( ctrl_win, 1, wx.EXPAND, 5 )

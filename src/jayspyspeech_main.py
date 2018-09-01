@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*
 import wx
 import sys, os
+reload(sys)
+sys.setdefaultencoding('utf-8')
+import subprocess
 sys.path.append(os.path.abspath("../gui"))
 import jayspyspeech_win
 import numpy
@@ -360,8 +363,9 @@ class mainWin(jayspyspeech_win.speech_win):
                 data += self.m_textCtrl_asrttsText.GetLineText(i)
         else:
             return
-        engineType = self.m_choice_ttsEngine.GetString(self.m_choice_ttsEngine.GetSelection())
-        if engineType == 'pyttsx3 - SAPI5':
+        ttsEngineType = self.m_choice_ttsEngine.GetString(self.m_choice_ttsEngine.GetSelection())
+        if ttsEngineType == 'pyttsx3 - SAPI5':
+            canTtsEngineMakeAudioFile = False
             if self.ttsObj == None:
                  self.ttsObj = pyttsx3.init()
             hasVoice = False
@@ -378,11 +382,27 @@ class mainWin(jayspyspeech_win.speech_win):
             if hasVoice:
                 self.ttsObj.setProperty('voice', voice.id)
                 self.ttsObj.say(data)
+                self.statusBar.SetStatusText("TTS Conversation Info: Run and Wait")
                 self.ttsObj.runAndWait()
+                self.statusBar.SetStatusText("TTS Conversation Info: Successfully")
             else:
                 self.statusBar.SetStatusText("TTS Conversation Info: Language is not supported by current PC")
         else:
             self.statusBar.SetStatusText("TTS Conversation Info: Unavailable TTS Engine")
+            canTtsEngineMakeAudioFile = True
+        if not canTtsEngineMakeAudioFile:
+            fileName = self.m_textCtrl_ttsFileName.GetLineText(0)
+            if fileName == '':
+                fileName = 'tts_untitled1.wav'
+            ttsFilePath = os.path.join(os.path.dirname(os.path.abspath(os.path.dirname(__file__))), 'conv', 'tts', fileName)
+            ttwEngineType = self.m_choice_ttwEngine.GetString(self.m_choice_ttwEngine.GetSelection())
+            if ttwEngineType == 'eSpeak TTS':
+                #espeak_path = "C:/tools_mcu/eSpeak/command_line/espeak.exe"
+                #subprocess.call([espeak_path, "-v"+languageType[0:2], data])
+                #subprocess.call([espeak_path, "-w" + ttsFilePath, data])
+                subprocess.call(["espeak", "-w" + ttsFilePath, data])
+            else:
+                self.statusBar.SetStatusText("TTW Conversation Info: Unavailable TTW Engine")
 
     def clearAsrTtsText( self, event ):
         self.m_textCtrl_asrttsText.Clear()
@@ -401,7 +421,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"JaysPySPEECH v0.9.1")
+    main_win.SetTitle(u"JaysPySPEECH v0.9.2")
     main_win.Show()
 
     app.MainLoop()
