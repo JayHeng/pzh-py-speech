@@ -194,6 +194,9 @@ class mainWin(jayspyspeech_win.speech_win):
 
     def __init__(self, parent):
         jayspyspeech_win.speech_win.__init__(self, parent)
+        icon = wx.Icon()
+        icon.CopyFromBitmap(wx.Bitmap( u"../img/jayspyspeech.ico", wx.BITMAP_TYPE_ANY))
+        self.SetIcon(icon)
         self.wavPanel = wavCanvasPanel(self.m_panel_plot)
         self.m_genericDirCtrl_audioDir.SetFilter("Audio files (*.wav)|*.wav")
         self.isRecording = False
@@ -449,7 +452,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"JaysPySPEECH v0.9.4")
+    main_win.SetTitle(u"JaysPySPEECH v1.0.0")
     main_win.Show()
 
     app.MainLoop()
