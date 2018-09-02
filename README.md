@@ -1,7 +1,7 @@
 # JaysPySPEECH
 A tiny audio speech assistant based on PyAudio+Matplotlib+SpeechRecognition(PocketSphinx)+pyttsx3(eSpeak) 
 
-<img src="http://odox9r8vg.bkt.clouddn.com/image/cnblogs/JaysPySPEECH_overview1.PNG" style="zoom:100%" />
+<img src="http://odox9r8vg.bkt.clouddn.com/image/cnblogs/JaysPySPEECH_overview_github.PNG" style="zoom:100%" />
 
 ### How to build :
 ********************
@@ -15,8 +15,7 @@ First of all, you should install all packages listed in [《JaysPySPEECH环境�
   6. Open "\JaysPySPEECH\bin\JaysPySPEECH.exe" to use it
 ```
 
-> Note1: It is only verified in environment: Windows 10, x64bit
-> Note2: TTW(Text-to-Wav) feature cannot be used as PyInstaller cannot pack pyttsx3+eSpeak up
+> Note: It is only verified in environment: Windows 10, x64bit, besides, TTW(Text-to-Wav) feature cannot be used as PyInstaller cannot pack pyttsx3+eSpeak up
 
 ### Features in v1.0.0 :
 ********************
