@@ -17,7 +17,7 @@ import wx.xrc
 class speech_win ( wx.Frame ):
 
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"JaysPySPEECH", pos = wx.DefaultPosition, size = wx.Size( 940,658 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"JaysPySPEECH", pos = wx.DefaultPosition, size = wx.Size( 942,694 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 64, 64, 64 ) )
@@ -40,7 +40,7 @@ class speech_win ( wx.Frame ):
 
 		dir_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
 
-		self.m_staticText_selectAudioFile = wx.StaticText( self, wx.ID_ANY, u"Select Audio File to Play and Show:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText_selectAudioFile = wx.StaticText( self, wx.ID_ANY, u"Select Audio File:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText_selectAudioFile.Wrap( -1 )
 
 		self.m_staticText_selectAudioFile.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
@@ -156,7 +156,26 @@ class speech_win ( wx.Frame ):
 
 		show_win = wx.BoxSizer( wx.VERTICAL )
 
-		plot_win = wx.BoxSizer( wx.VERTICAL )
+		plot_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
+
+		self.m_staticText_showAudioFile = wx.StaticText( self, wx.ID_ANY, u"Show Audio File:", wx.DefaultPosition, wx.Size( 215,-1 ), 0 )
+		self.m_staticText_showAudioFile.Wrap( -1 )
+
+		self.m_staticText_showAudioFile.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+
+		plot_win.Add( self.m_staticText_showAudioFile, 0, wx.ALL, 5 )
+
+		self.m_staticText_domain = wx.StaticText( self, wx.ID_ANY, u"Domain:", wx.DefaultPosition, wx.Size( 50,-1 ), 0 )
+		self.m_staticText_domain.Wrap( -1 )
+
+		self.m_staticText_domain.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+
+		plot_win.Add( self.m_staticText_domain, 0, wx.ALL, 5 )
+
+		m_choice_domainChoices = [ u"Time", u"Frequency" ]
+		self.m_choice_domain = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, m_choice_domainChoices, 0 )
+		self.m_choice_domain.SetSelection( 0 )
+		plot_win.Add( self.m_choice_domain, 0, wx.ALL, 5 )
 
 		self.m_panel_plot = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 720,360 ), wx.TAB_TRAVERSAL )
 		self.m_panel_plot.SetFont( wx.Font( 9, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "宋体" ) )
@@ -170,7 +189,7 @@ class speech_win ( wx.Frame ):
 
 		ctrl_win = wx.WrapSizer( wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS )
 
-		self.m_staticText_conv = wx.StaticText( self, wx.ID_ANY, u"Audio/Text  Conversation Configuration and Display:", wx.DefaultPosition, wx.Size( 290,-1 ), 0 )
+		self.m_staticText_conv = wx.StaticText( self, wx.ID_ANY, u"Audio/Text  Conversation Configuration and Display:", wx.DefaultPosition, wx.Size( 285,-1 ), 0 )
 		self.m_staticText_conv.Wrap( -1 )
 
 		self.m_staticText_conv.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )

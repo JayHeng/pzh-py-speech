@@ -35,13 +35,13 @@ AUDIO_PLAY_STATE_END = 4
 class wavCursor(object):
     def __init__(self, ax, x, y):
         self.ax = ax
-        self.vline = ax.axvline(color='r', alpha=1)
-        self.hline = ax.axhline(color='r', alpha=1)
+        self.vline = ax.axvline(color='blue', alpha=1)
+        self.hline = ax.axhline(color='blue', alpha=1)
         self.marker, = ax.plot([0],[0], marker="o", color="crimson", zorder=3)
         self.x = x
         self.y = y
         self.xlim = self.x[len(self.x)-1]
-        self.text = ax.text(0.7, 0.9, '', bbox=dict(facecolor='red', alpha=0.5))
+        self.text = ax.text(0.7, 0.9, '', bbox=dict(facecolor='yellow', alpha=0.5))
 
     def moveMouse(self, event):
         if not event.inaxes:
@@ -129,7 +129,7 @@ class wavCanvasPanel(wx.Panel):
         else:
             return 0, 0, 0
 
-    def showWave(self, wavPath, wavInfo):
+    def showWave(self, wavPath, wavDomain, wavInfo):
         self.wavFigure.clear()
         waveChannels, waveData, waveTime = self.readWave(wavPath, wavInfo)
         if waveChannels != 0:
@@ -143,18 +143,26 @@ class wavCanvasPanel(wx.Panel):
                 height = 1.0 / waveChannels - (PLOT_AXES_WIDTH_TITLE + PLOT_AXES_HEIGHT_LABEL)
                 width = 1 - left - 0.05
                 self.wavAxes[i] = self.wavFigure.add_axes([left, bottom, width, height], facecolor='k')
-                self.wavAxes[i].set_prop_cycle(color='#00F279', lw=[1])
-                self.wavAxes[i].set_xlabel('time (s)', color='w')
-                self.wavAxes[i].set_ylabel('value', color='w')
                 if waveChannels == 1:
-                    data = waveData
+                    waveAmplitude = waveData
                 else:
-                    data = waveData[i]
-                self.wavAxes[i].plot(waveTime, data)
+                    waveAmplitude = waveData[i]
+                if wavDomain == 'Time':
+                    self.wavAxes[i].set_prop_cycle(color='#00F279', lw=[1])
+                    self.wavAxes[i].set_xlabel('time (s)', color='w')
+                    self.wavAxes[i].plot(waveTime, waveAmplitude)
+                    self.wavCursor[i] = wavCursor(self.wavAxes[i], waveTime, waveAmplitude)
+                elif wavDomain == 'Frequency':
+                    self.wavAxes[i].set_prop_cycle(color='red', lw=[1])
+                    self.wavAxes[i].set_xlabel('Frequency (Hz)', color='w')
+                    waveMagnitude = numpy.absolute(numpy.fft.rfft(waveAmplitude))
+                    waveFreq = numpy.fft.rfftfreq(len(waveTime), numpy.diff(waveTime)[0])
+                    self.wavAxes[i].plot(waveFreq, waveMagnitude)
+                    self.wavCursor[i] = wavCursor(self.wavAxes[i], waveFreq, waveMagnitude)
+                self.wavAxes[i].set_ylabel('value', color='w')
                 self.wavAxes[i].grid()
                 self.wavAxes[i].tick_params(labelcolor='w')
                 self.wavAxes[i].set_title('Audio Channel ' + str(i), color='w')
-                self.wavCursor[i] = wavCursor(self.wavAxes[i], waveTime, data)
                 self.wavCanvas.mpl_connect('motion_notify_event', self.wavCursor[i].moveMouse)
         # Note!!!: draw() must be called if figure has been cleared once
         self.wavCanvas.draw()
@@ -208,7 +216,8 @@ class mainWin(jayspyspeech_win.speech_win):
 
     def viewAudio( self, event ):
         self.wavPath =  self.m_genericDirCtrl_audioDir.GetFilePath()
-        self.wavPanel.showWave(self.wavPath, self.statusBar)
+        wavDomain = self.m_choice_domain.GetString(self.m_choice_domain.GetSelection())
+        self.wavPanel.showWave(self.wavPath, wavDomain, self.statusBar)
         if self.playState != AUDIO_PLAY_STATE_START:
             self.playState = AUDIO_PLAY_STATE_END
             self.m_button_play.SetLabel('Play Start')
@@ -452,7 +461,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"JaysPySPEECH v1.0.0")
+    main_win.SetTitle(u"JaysPySPEECH v1.1.0")
     main_win.Show()
 
     app.MainLoop()
