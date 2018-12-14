@@ -3,7 +3,7 @@ A tiny audio speech assistant based on PyAudio+Matplotlib+SpeechRecognition(Pock
 
 [![GitHub release](https://img.shields.io/github/release/JayHeng/JaysPySPEECH.svg)](https://github.com/JayHeng/JaysPySPEECH/releases/latest) [![GitHub commits](https://img.shields.io/github/commits-since/JayHeng/JaysPySPEECH/v1.0.0.svg)](https://github.com/JayHeng/JaysPySPEECH/compare/v1.0.0...master) [![GitHub license](https://img.shields.io/github/license/JayHeng/JaysPyCOM.svg)](https://github.com/JayHeng/JaysPyCOM/blob/master/LICENSE.txt)
 
-<img src="http://odox9r8vg.bkt.clouddn.com/image/cnblogs/JaysPySPEECH_overview_github.PNG" style="zoom:100%" />
+<img src="http://henjay724.com/image/cnblogs/JaysPySPEECH_overview_github.PNG" style="zoom:100%" />
 
 ### How to build :
 ********************
