@@ -1,23 +1,20 @@
 # JaysPySPEECH
 A tiny audio speech assistant based on PyAudio+Matplotlib+SpeechRecognition(PocketSphinx)+pyttsx3(eSpeak) 
 
-[![GitHub release](https://img.shields.io/github/release/JayHeng/JaysPySPEECH.svg)](https://github.com/JayHeng/JaysPySPEECH/releases/latest) [![GitHub commits](https://img.shields.io/github/commits-since/JayHeng/JaysPySPEECH/v1.0.0.svg)](https://github.com/JayHeng/JaysPySPEECH/compare/v1.0.0...master) [![GitHub license](https://img.shields.io/github/license/JayHeng/JaysPyCOM.svg)](https://github.com/JayHeng/JaysPyCOM/blob/master/LICENSE.txt)
+[![GitHub release](https://img.shields.io/github/release/JayHeng/Jays-PySPEECH.svg)](https://github.com/JayHeng/Jays-PySPEECH/releases/latest) [![GitHub commits](https://img.shields.io/github/commits-since/JayHeng/Jays-PySPEECH/v1.0.0.svg)](https://github.com/JayHeng/Jays-PySPEECH/compare/v1.0.0...master) [![GitHub license](https://img.shields.io/github/license/JayHeng/Jays-PyCOM.svg)](https://github.com/JayHeng/Jays-PyCOM/blob/master/LICENSE.txt)
 
 <img src="http://henjay724.com/image/cnblogs/JaysPySPEECH_overview_github.PNG" style="zoom:100%" />
 
 ### How to build :
 ********************
-First of all, you should install all packages listed in [《JaysPySPEECH环境搭建》](https://www.cnblogs.com/henjay724/p/9542690.html), then follow below steps:
+First of all, you should install all Non-Python packages listed in [《Jays-PySPEECH环境搭建》](https://www.cnblogs.com/henjay724/p/9542690.html), then follow below steps:
 ```text
-  1. cd to "\JaysPySPEECH\bin\"
-  2. Update pathex in JaysPySPEECH.spec to current path in your PC
-  3. Run "pyinstaller JaysPySPEECH.spec"
-  4. You will see "\JaysPySPEECH\bin\dist\JaysPySPEECH.exe" is generated
-  5. Move JaysPySPEECH.exe to dictionary "\JaysPySPEECH\bin\" (this step is a MUST!!!)
-  6. Open "\JaysPySPEECH\bin\JaysPySPEECH.exe" to use it
+  1. Install Python2.7.15 x86 version
+  2. Confirm that the directory "\Python27\" and "\Python27\Scripts\" are in the system environment variable path after the installation is completed
+  3. Click on "do_setup_by_pip.bat" in the "\Jays-PySPEECH\env\" directory to install the Python library on which Jays-PySPEECH depends
+  4. Click "do_pack_by_pyinstaller.bat" to regenerate the Jays-PySPEECH.exe
+  5. Open "\Jays-PySPEECH\bin\Jays-PySPEECH.exe" to use it
 ```
-
-> Note: It is only verified in environment: Windows 10, x64bit, besides, TTW(Text-to-Wav) feature cannot be used as PyInstaller cannot pack pyttsx3+eSpeak up
 
 ### Tool Features :
 ********************
@@ -28,7 +25,7 @@ First of all, you should install all packages listed in [《JaysPySPEECH环境�
 * TTS: Translate input text to speech
 * TTW: Translate input text to .wav file (\conv\tts)
 * Both English and Chinese are supported in ASR,TTS,TTW
-* Design detail: [《JaysPySPEECH诞生记(全七篇)》](https://www.cnblogs.com/henjay724/p/9541867.html)
+* Design detail: [《Jays-PySPEECH诞生记(全七篇)》](https://www.cnblogs.com/henjay724/p/9541867.html)
 
 Known issues:
 * The audio data are all 0x00s if BitDepth is set as 8bits when recording sound (it seems to be PyAudio issue)

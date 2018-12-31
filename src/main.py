@@ -4,8 +4,7 @@ import sys, os
 reload(sys)
 sys.setdefaultencoding('utf-8')
 import subprocess
-sys.path.append(os.path.abspath("../gui"))
-import jayspyspeech_win
+import win
 import numpy
 import matplotlib
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
@@ -189,7 +188,7 @@ class wavCanvasPanel(wx.Panel):
         #welcomeAxes.set_aspect('equal')
         welcomeAxes.tripcolor(triang, z, shading='flat')
         # Set some properties
-        welcomeAxes.set_title('Welcome to use JaysPySPEECH', color='w')
+        welcomeAxes.set_title('Welcome to use Jays-PySPEECH', color='w')
         welcomeAxes.set_xticks([])
         welcomeAxes.set_yticks([])
         welcomeAxes.spines['top'].set_visible(False)
@@ -198,12 +197,12 @@ class wavCanvasPanel(wx.Panel):
         welcomeAxes.spines['left'].set_visible(False)
         self.wavCanvas.draw()
 
-class mainWin(jayspyspeech_win.speech_win):
+class mainWin(win.speech_win):
 
     def __init__(self, parent):
-        jayspyspeech_win.speech_win.__init__(self, parent)
+        win.speech_win.__init__(self, parent)
         icon = wx.Icon()
-        icon.CopyFromBitmap(wx.Bitmap( u"../img/jayspyspeech.ico", wx.BITMAP_TYPE_ANY))
+        icon.CopyFromBitmap(wx.Bitmap( u"../img/Jays-PySPEECH.ico", wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
         self.wavPanel = wavCanvasPanel(self.m_panel_plot)
         self.m_genericDirCtrl_audioDir.SetFilter("Audio files (*.wav)|*.wav")
@@ -461,7 +460,7 @@ if __name__ == '__main__':
     app = wx.App()
 
     main_win = mainWin(None)
-    main_win.SetTitle(u"JaysPySPEECH v1.1.0")
+    main_win.SetTitle(u"Jays-PySPEECH v1.1.0")
     main_win.Show()
 
     app.MainLoop()

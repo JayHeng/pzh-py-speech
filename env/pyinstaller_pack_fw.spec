@@ -3,8 +3,8 @@
 block_cipher = None
 
 
-a = Analysis(['..\\src\\jayspyspeech_main.py', '..\\gui\\jayspyspeech_win.py'],
-             pathex=['D:\\my_git_repo\\JaysPySPEECH\\bin'],
+a = Analysis(['..\\src\\main.py',
+              '..\\src\\win.py'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -21,9 +21,9 @@ exe = EXE(pyz,
           a.binaries,
           a.zipfiles,
           a.datas,
-          name='JaysPySPEECH',
+          name='Jays-PySPEECH',
           debug=False,
           strip=False,
           upx=True,
           runtime_tmpdir=None,
-          console=False , icon='..\\img\\jayspyspeech.ico')
+          console=False , icon='..\\img\\Jays-PySPEECH.ico')
