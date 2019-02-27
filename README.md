@@ -1,38 +1,40 @@
 # JaysPySPEECH
-A tiny audio speech assistant based on PyAudio+Matplotlib+SpeechRecognition(PocketSphinx)+pyttsx3(eSpeak) 
+A tiny audio speech (.wav) utility tool (GUI) based on Python2.7+wxPython4.0+PyAudio+Matplotlib+SpeechRecognition(PocketSphinx)+pyttsx3(eSpeak) | 一款支持多引擎的wav格式语音处理小工具（音频录播与波形显示，语音识别，文语合成） 
 
 [![GitHub release](https://img.shields.io/github/release/JayHeng/Jays-PySPEECH.svg)](https://github.com/JayHeng/Jays-PySPEECH/releases/latest) [![GitHub commits](https://img.shields.io/github/commits-since/JayHeng/Jays-PySPEECH/v1.0.0.svg)](https://github.com/JayHeng/Jays-PySPEECH/compare/v1.0.0...master) [![GitHub license](https://img.shields.io/github/license/JayHeng/Jays-PyCOM.svg)](https://github.com/JayHeng/Jays-PyCOM/blob/master/LICENSE.txt)
 
+[English](./README-en.md) | 中文
+
 <img src="http://henjay724.com/image/cnblogs/JaysPySPEECH_overview_github.PNG" style="zoom:100%" />
 
-### How to build :
+### 1. 二次开发与重编 :
 ********************
-First of all, you should install all Non-Python packages listed in [《Jays-PySPEECH环境搭建》](https://www.cnblogs.com/henjay724/p/9542690.html), then follow below steps:
+　　参考这篇文章 [《Jays-PySPEECH环境搭建》](https://www.cnblogs.com/henjay724/p/9542690.html) 安装所有非Python相关的开发工具, 然后按照如下步骤继续安装Python环境:  
 ```text
-  1. Install Python2.7.15 x86 version
-  2. Confirm that the directory "\Python27\" and "\Python27\Scripts\" are in the system environment variable path after the installation is completed
-  3. Click on "do_setup_by_pip.bat" in the "\Jays-PySPEECH\env\" directory to install the Python library on which Jays-PySPEECH depends
-  4. Click "do_pack_by_pyinstaller.bat" to regenerate the Jays-PySPEECH.exe
-  5. Open "\Jays-PySPEECH\bin\Jays-PySPEECH.exe" to use it
+  1. 安装Python2.7.15 x86 version  
+  2. 确认系统路径包含"\Python27\" 和 "\Python27\Scripts\"  
+  3. 双击"\Jays-PySPEECH\env\do_setup_by_pip.bat"脚本安装所有依赖的第三方Python库  
+  4. 双击"\Jays-PySPEECH\env\do_pack_by_pyinstaller.bat"脚本重新生成Jays-PySPEECH.exe  
+  5. 双击"\Jays-PySPEECH\bin\Jays-PySPEECH.exe"运行  
 ```
 
-### Tool Features :
+### 2. 软件功能 :
 ********************
-* View the waveform of selected .wav file
-* Record sound from microphone to .wav file (\conv\rec)
-* Play selected .wav file
-* ASR: Recognize selected .wav file to text (\conv\asr)
-* TTS: Translate input text to speech
-* TTW: Translate input text to .wav file (\conv\tts)
-* Both English and Chinese are supported in ASR,TTS,TTW
-* Design detail: [《Jays-PySPEECH诞生记(全七篇)》](https://www.cnblogs.com/henjay724/p/9541867.html)
+* 支持查看所选的.wav文件波形图  
+* 支持从麦克风录制声音进.wav文件 (\conv\rec)  
+* 支持播放所选的.wav文件  
+* ASR: 支持识别.wav文件里的内容并保存到文本文件 (\conv\asr)  
+* TTS: 支持将输入的文本内容转换成语音播放  
+* TTW: 支持将输入的文本内容转换成.wav文件 (\conv\tts)  
+* 支持两种语言（中英）的上述ASR,TTS,TTW处理  
+* 软件设计细节详见: [《Jays-PySPEECH诞生记(全七篇)》](https://www.cnblogs.com/henjay724/p/9541867.html)
 
-Known issues:
-* The audio data are all 0x00s if BitDepth is set as 8bits when recording sound (it seems to be PyAudio issue)
-* Sometimes Application will hang up if language is set as Chinese when using TTS (it may be MSSpeech_TTS_xxx language package installation issue)
+已知问题:  
+* 在录制声音时，如果BitDepth设为8bits，录制的音频数据全是0x00 (应该是PyAudio库的问题)  
+* 在处理TTS时，如果语言设置为中文，有时候软件会停止执行 (可能是MSSpeech_TTS_xxx language包的安装问题)  
 
-### License :
+### 3. License :
 ********************
-This package is licensed under the BSD three-clause license. See the LICENSE.txt file for details.
+　　软件采用BSD three-clause license， 更多许可证细节详见LICENSE.txt。
 
 Copyright © 2017-2018 Jay Heng.
