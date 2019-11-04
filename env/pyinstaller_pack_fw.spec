@@ -21,9 +21,9 @@ exe = EXE(pyz,
           a.binaries,
           a.zipfiles,
           a.datas,
-          name='Jays-PySPEECH',
+          name='pzh-speech',
           debug=False,
           strip=False,
           upx=True,
           runtime_tmpdir=None,
-          console=False , icon='..\\img\\Jays-PySPEECH.ico')
+          console=False , icon='..\\img\\pzh-speech.ico')

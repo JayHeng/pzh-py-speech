@@ -1,7 +1,7 @@
-# JaysPySPEECH
+# pzh-speech
 A tiny audio speech (.wav) utility tool (GUI) based on Python2.7+wxPython4.0+PyAudio+Matplotlib+SpeechRecognition(PocketSphinx)+pyttsx3(eSpeak) | 一款支持多引擎的wav格式语音处理小工具（音频录播与波形显示，语音识别，文语合成） 
 
-[![GitHub release](https://img.shields.io/github/release/JayHeng/Jays-PySPEECH.svg)](https://github.com/JayHeng/Jays-PySPEECH/releases/latest) [![GitHub commits](https://img.shields.io/github/commits-since/JayHeng/Jays-PySPEECH/v1.0.0.svg)](https://github.com/JayHeng/Jays-PySPEECH/compare/v1.0.0...master) [![GitHub license](https://img.shields.io/github/license/JayHeng/Jays-PyCOM.svg)](https://github.com/JayHeng/Jays-PyCOM/blob/master/LICENSE.txt)
+[![GitHub release](https://img.shields.io/github/release/JayHeng/pzh-py-speech.svg)](https://github.com/JayHeng/pzh-py-speech/releases/latest) [![GitHub commits](https://img.shields.io/github/commits-since/JayHeng/pzh-py-speech/v1.0.0.svg)](https://github.com/JayHeng/pzh-py-speech/compare/v1.0.0...master) [![GitHub license](https://img.shields.io/github/license/JayHeng/pzh-py-speech.svg)](https://github.com/JayHeng/pzh-py-speech/blob/master/LICENSE.txt)
 
 English | [中文](./README.md)
 
@@ -9,13 +9,13 @@ English | [中文](./README.md)
 
 ### How to build :
 ********************
-　　First of all, you should install all Non-Python packages listed in [《Jays-PySPEECH环境搭建》](https://www.cnblogs.com/henjay724/p/9542690.html), then follow below steps:
+　　First of all, you should install all Non-Python packages listed in [《痞子衡语音处理助手-开发环境搭建》](https://www.cnblogs.com/henjay724/p/9542690.html), then follow below steps:
 ```text
   1. Install Python2.7.15 x86 version
   2. Confirm that the directory "\Python27\" and "\Python27\Scripts\" are in the system environment variable path after the installation is completed
-  3. Double click "\Jays-PySPEECH\env\do_setup_by_pip.bat" to install the Python library on which Jays-PySPEECH depends
-  4. Double click "\Jays-PySPEECH\env\do_pack_by_pyinstaller.bat" to regenerate the Jays-PySPEECH.exe
-  5. Open "\Jays-PySPEECH\bin\Jays-PySPEECH.exe" to use it
+  3. Double click "\pzh-py-speech\env\do_setup_by_pip.bat" to install the Python library on which pzh-speech depends
+  4. Double click "\pzh-py-speech\env\do_pack_by_pyinstaller.bat" to regenerate the pzh-speech.exe
+  5. Open "\pzh-py-speech\bin\pzh-speech.exe" to use it
 ```
 
 ### Tool Features :
@@ -27,7 +27,7 @@ English | [中文](./README.md)
 * TTS: Translate input text to speech
 * TTW: Translate input text to .wav file (\conv\tts)
 * Both English and Chinese are supported in ASR,TTS,TTW
-* Design detail: [《Jays-PySPEECH诞生记(全七篇)》](https://www.cnblogs.com/henjay724/p/9541867.html)
+* Design detail: [《痞子衡语音处理助手诞生记(全七篇)》](https://www.cnblogs.com/henjay724/p/9541867.html)
 
 Known issues:
 * The audio data are all 0x00s if BitDepth is set as 8bits when recording sound (it seems to be PyAudio issue)
